@@ -1,0 +1,19 @@
+{
+  "user facing": {
+    "name": "Disable arrow keys",
+    "type": "Keymap",
+    "short description": "Forces you to use hjkl and motions to move around",
+    "details description": null,
+    "default value": false,
+    "enabled": true,
+    "category": "Keymap",
+    "notes": null,
+    "popularity": 5,
+    "advanced/basic": "basic"
+  },
+  "internal": {
+    "installed": true,
+    "identifier": "disable_arrow_keys",
+    "template": "disable_arrow_keys.j2"
+  }
+}

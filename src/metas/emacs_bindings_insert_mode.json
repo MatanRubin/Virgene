@@ -1,0 +1,19 @@
+{
+  "user facing": {
+    "name": "Emacs bindins in insert mode",
+    "type": "Keymap",
+    "short description": "Adds traditional Emacs key bindings when in insert mode",
+    "details description": "Ctrl-A: Move cursor to beginning of line, etc.",
+    "default value": true,
+    "enabled": true,
+    "category": "Keymap",
+    "notes": "To get this working, we need to disable the Alt key from opening GUI menus",
+    "popularity": 10,
+    "advanced/basic": "basic"
+  },
+  "internal": {
+    "installed": true,
+    "identifier": "emacs_bindins_insert_mode",
+    "template": "emacs_bindins_insert_mode.j2"
+  }
+}
