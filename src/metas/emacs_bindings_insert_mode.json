@@ -11,5 +11,6 @@
 	"advanced": false,
 	"installed": true,
 	"identifier": "emacs_bindins_insert_mode",
-	"template": "emacs_bindins_insert_mode.j2"
+	"template_path": "templates/emacs_bindins_insert_mode.j2",
+	"meta_path": "metas/emacs_bindins_insert_mode.json"
 }

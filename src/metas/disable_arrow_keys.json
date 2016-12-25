@@ -11,5 +11,6 @@
 	"advanced": false,
 	"installed": true,
 	"identifier": "disable_arrow_keys",
-	"template": "disable_arrow_keys.j2"
+	"template_path": "templates/disable_arrow_keys.j2",
+	"meta_path": "metas/disable_arrow_keys.json"
 }
