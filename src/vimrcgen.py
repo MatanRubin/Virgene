@@ -14,7 +14,7 @@ from datetime import datetime
 from os import path
 import json
 from json import JSONEncoder
-from pprint import pprint
+import sys
 from docopt import docopt
 from functional import seq
 
@@ -34,7 +34,7 @@ class Config:
         date_created = config_json["date_created"]
         features_json = config_json["features"]
         config = Config()
-        features = seq(features_json).map(lambda x: Feature.from_meta_json(x)).to_list()
+        features = [Feature.from_meta_json(x) for x in features_json]
         for feature in features:
             config.add_feature(feature)
         return config
@@ -63,7 +63,13 @@ class ConfigMgr:
         with open(abs_input_path) as input_file:
             input_json = json.load(input_file)
         config = Config.from_json(input_json)
-        print(config)
+        templates = [path.join(SRC_DIR, x.template_path) for x in config.features]
+        output_file = open(output_path, 'w') if output_path is not None else sys.stdout
+        for template_path in templates:
+            with open(template_path) as template_file:
+                output_file.write(template_file.read())
+        output_file.close()
+
 
 
     @classmethod

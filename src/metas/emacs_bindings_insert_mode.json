@@ -1,5 +1,5 @@
 {
-	"name": "Emacs bindins in insert mode",
+	"name": "Emacs bindings in insert mode",
 	"type": "Keymap",
 	"short_description": "Adds traditional Emacs key bindings when in insert mode",
 	"detailed_description": "Ctrl-A: Move cursor to beginning of line, etc.",
@@ -10,7 +10,7 @@
 	"popularity": 10,
 	"advanced": false,
 	"installed": true,
-	"identifier": "emacs_bindins_insert_mode",
-	"template_path": "templates/emacs_bindins_insert_mode.j2",
-	"meta_path": "metas/emacs_bindins_insert_mode.json"
+	"identifier": "emacs_bindings_insert_mode",
+	"template_path": "templates/emacs_bindings_insert_mode.j2",
+	"meta_path": "metas/emacs_bindings_insert_mode.json"
 }
