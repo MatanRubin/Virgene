@@ -1,0 +1,17 @@
+{
+	"name": "Tagbar",
+	"type": "Plugin",
+	"short_description": "Vim plugin that displays tags in a window, ordered by scope",
+	"detailed_description": null,
+	"default_value": false,
+	"enabled": true,
+	"category": "Plugin",
+	"notes": null,
+	"popularity": 10,
+	"advanced": false,
+	"installed": true,
+	"identifier": "tagbar",
+	"template_path": "templates/tagbar.j2",
+	"meta_path": "metas/tagbar.json",
+	"vundle_installation": "majutsushi/tagbar"
+}

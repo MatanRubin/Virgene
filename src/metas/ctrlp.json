@@ -1,0 +1,17 @@
+{
+	"name": "CtrlP",
+	"type": "Plugin",
+	"short_description": "Full path fuzzy file, buffer, mru, tag, ... finder for Vim.",
+	"detailed_description": null,
+	"default_value": false,
+	"enabled": true,
+	"category": "Plugin",
+	"notes": null,
+	"popularity": 10,
+	"advanced": false,
+	"installed": true,
+	"identifier": "ctrlp",
+	"template_path": "templates/ctrlp.j2",
+	"meta_path": "metas/ctrlp.json",
+	"vundle_installation": "ctrlpvim/ctrlp.vim"
+}
