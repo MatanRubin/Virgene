@@ -1,0 +1,46 @@
+{
+	"name": "UltiSnips",
+	"type": "Plugin",
+	"short_description": "The ultimate snippet solution for Vim",
+	"detailed_description": null,
+	"default_value": false,
+	"enabled": true,
+	"category": "Plugin",
+	"notes": null,
+	"popularity": 10,
+	"advanced": false,
+	"installed": true,
+	"identifier": "ultisnips",
+	"template_path": "templates/ultisnips.j2",
+	"meta_path": "metas/ultisnips.json",
+	"vundle_installation": "SirVer/ultisnips",
+	"options": [
+		{
+			"name": "Expand trigger",
+			"description": "Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.",
+			"default_value": "<tab>",
+			"value": "<tab>"
+		},
+		{
+			"name": "Expand trigger",
+			"description": "Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.",
+			"variable": "g:UltiSnipsExpandTrigger",
+			"default_value": "<tab>",
+			"value": "<tab>"
+		},
+		{
+			"name": "Jump forward trigger",
+			"description": "bla bla",
+			"variable": "g:UltiSnipsJumpForwardTrigger",
+			"default_value": "<c-b>",
+			"value": "<c-b>"
+		},
+		{
+			"name": "Jump backward trigger",
+			"description": "bli bla",
+			"variable": "g:UltiSnipsJumpBackwardTrigger",
+			"default_value": "<c-z>",
+			"value": "<c-z>"
+		}
+	]
+}

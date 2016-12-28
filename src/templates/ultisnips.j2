@@ -1,0 +1,5 @@
+Plugin 'honza/vim-snippets'
+
+{% for option in plugin.options %}
+let {{ option.variable }} = "{{ option.value }}" " {{ option.description }}
+{% endfor %}

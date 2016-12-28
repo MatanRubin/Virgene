@@ -66,8 +66,11 @@ class ConfigMgr:
         config = Config.from_json(input_json)
         env = jinja2.Environment(loader=jinja2.PackageLoader('src', 'templates'),
                                  trim_blocks=True, lstrip_blocks=True)
-        template = env.get_template('vimrc.j2')
-        print(template.render(configuration=config))
+        # template = env.get_template('vimrc.j2')
+        # print(template.render(configuration=config))
+        template = env.get_template('ultisnips.j2')
+        ultisnips_plugin = [x for x in config.features if x.name == "UltiSnips"][0]
+        print(template.render(plugin=ultisnips_plugin))
         exit(0)
 
         templates = [path.join(SRC_DIR, x.template_path) for x in config.features]
@@ -109,6 +112,7 @@ class ConfigMgr:
             'metas/disable_arrow_keys.json',
             'metas/ctrlp.json',
             'metas/tagbar.json',
+            'metas/ultisnips.json',
         ]
         return seq(meta_files).map(lambda x: path.join(SRC_DIR, x))\
             .map(lambda x: Feature.from_meta_path(x))\
@@ -121,7 +125,13 @@ class MyEncoder(JSONEncoder):
     def default(self, o):
         return o.__dict__
 
-
+class Option:
+    
+    def __init__(self, name, description, default_value, ):
+        self.name = name
+        self.description = description
+        self.default_value = default_value
+        
 class Feature:
 
     def __init__(self, name, short_description, detailed_description,
