@@ -65,12 +65,18 @@ class ConfigMgr:
             input_json = json.load(input_file)
         config = Config.from_json(input_json)
         env = jinja2.Environment(loader=jinja2.PackageLoader('src', 'templates'),
-                                 trim_blocks=True, lstrip_blocks=True)
+                                 trim_blocks=True, lstrip_blocks=True,
+                                 line_statement_prefix='%',
+                                 line_comment_prefix='#')
         # template = env.get_template('vimrc.j2')
         # print(template.render(configuration=config))
         template = env.get_template('ultisnips.j2')
         ultisnips_plugin = [x for x in config.features if x.name == "UltiSnips"][0]
         print(template.render(plugin=ultisnips_plugin))
+
+        template = env.get_template('ctrlp.j2')
+        ctrl_plugin = [x for x in config.features if x.name == "CtrlP"][0]
+        print(template.render(plugin=ctrl_plugin))
         exit(0)
 
         templates = [path.join(SRC_DIR, x.template_path) for x in config.features]
@@ -220,7 +226,8 @@ def test_config():
 
 def jinja2_test():
     env = jinja2.Environment(loader=jinja2.PackageLoader('src', 'templates'),
-                             lstrip_blocks=True, trim_blocks=True)
+                             lstrip_blocks=True, trim_blocks=True,
+                             line_statement_prefix='%', line_comment_prefix='#')
     template = env.get_template('vimrc.j2')
     plugins = [
         {

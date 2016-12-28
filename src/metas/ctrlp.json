@@ -13,5 +13,25 @@
 	"identifier": "ctrlp",
 	"template_path": "templates/ctrlp.j2",
 	"meta_path": "metas/ctrlp.json",
-	"vundle_installation": "ctrlpvim/ctrlp.vim"
+	"vundle_installation": "ctrlpvim/ctrlp.vim",
+	"options": {
+		"ctrlp_cmd": {
+			"name": "CtrlP Command",
+			"description": "Which mode should CtrlP start in",
+			"default_value": "CtrlPMixed",
+			"value": "CtrlPMixed"
+		},
+		"ctrlp_extensions": {
+			"name": "CtrlP Extensions",
+			"description": "bla bla",
+			"default_value": "['dir', 'mixed']",
+			"value": "['dir', 'mixed']"
+		},
+		"ctrlp_working_path_mode": {
+			"name": "CtrlP working path mode",
+			"description": "bli bla",
+			"default_value": "ra",
+			"value": "ra"
+		}
+	}
 }

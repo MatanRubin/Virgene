@@ -1,0 +1,17 @@
+% extends "plugin_config.j2"
+
+% block plugin_options
+
+% if plugin.options.ctrlp_cmd is defined
+let g:ctrlp_cmd = '{{ plugin.options.ctrlp_cmd.value }}'
+% endif
+
+% if plugin.options.ctrlp_extensions is defined
+let g:ctrlp_extensions = {{ plugin.options.ctrlp_extensions.value }}
+% endif
+
+% if plugin.options.ctrlp_working_path_mode is defined
+let g:ctrlp_working_path_mode = '{{ plugin.options.ctrlp_working_path_mode.value }}'
+% endif
+
+% endblock
