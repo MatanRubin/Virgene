@@ -127,17 +127,33 @@ class MyEncoder(JSONEncoder):
 
 class Option:
     
-    def __init__(self, name, description, default_value, ):
+    def __init__(self, name, description, default_value, value):
         self.name = name
         self.description = description
         self.default_value = default_value
-        
+        self.value = value
+
+
+    @staticmethod
+    def from_meta_json(meta_json):
+        return Option(meta_json["name"], meta_json["description"],
+                       meta_json["default_value"], meta_json["value"])
+
+
+    @staticmethod
+    def from_meta_path(meta_path):
+        with open(meta_path) as meta_file:
+            meta_json = json.load(meta_file)
+
+        return Option.from_meta_json(meta_json)
+
+
 class Feature:
 
     def __init__(self, name, short_description, detailed_description,
                  default_value, enabled, category, notes, popularity, advanced,
                  installed, identifier, template_path, meta_path,
-                 vundle_installation=None):
+                 vundle_installation=None, options=None):
         self.name = name
         self.short_description = short_description
         self.detailed_description = detailed_description
@@ -152,10 +168,13 @@ class Feature:
         self.template_path = template_path
         self.meta_path = meta_path
         self.vundle_installation = vundle_installation
+        self.options = options
 
     @staticmethod
     def from_meta_json(meta_json):
         vundle_installation = meta_json.get("vundle_installation", None)
+        options = meta_json.get("options", None)
+
         return Feature(meta_json["name"], meta_json["short_description"],
                        meta_json["detailed_description"],
                        meta_json["default_value"], meta_json["enabled"],
@@ -163,7 +182,7 @@ class Feature:
                        meta_json["popularity"], meta_json["advanced"],
                        meta_json["installed"], meta_json["identifier"],
                        meta_json["template_path"], meta_json["meta_path"],
-                       vundle_installation)
+                       vundle_installation, options)
 
 
     @staticmethod

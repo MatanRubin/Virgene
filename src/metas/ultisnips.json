@@ -14,33 +14,31 @@
 	"template_path": "templates/ultisnips.j2",
 	"meta_path": "metas/ultisnips.json",
 	"vundle_installation": "SirVer/ultisnips",
-	"options": [
-		{
+	"options": {
+		"expand_trigger": {
 			"name": "Expand trigger",
 			"description": "Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.",
 			"default_value": "<tab>",
 			"value": "<tab>"
 		},
-		{
-			"name": "Expand trigger",
-			"description": "Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.",
-			"variable": "g:UltiSnipsExpandTrigger",
-			"default_value": "<tab>",
-			"value": "<tab>"
-		},
-		{
+		"jump_forward_trigger": {
 			"name": "Jump forward trigger",
 			"description": "bla bla",
-			"variable": "g:UltiSnipsJumpForwardTrigger",
 			"default_value": "<c-b>",
 			"value": "<c-b>"
 		},
-		{
+		"jump_backward_trigger": {
 			"name": "Jump backward trigger",
 			"description": "bli bla",
-			"variable": "g:UltiSnipsJumpBackwardTrigger",
 			"default_value": "<c-z>",
 			"value": "<c-z>"
+		},
+		"default_snippets": {
+			"name": "Jump backward trigger",
+			"description": "Use honza/vim-snippets (default snippets)",
+			"default_value": true,
+			"value": true
 		}
-	]
+
+	}
 }
