@@ -11,7 +11,6 @@
 	"advanced": false,
 	"installed": true,
 	"identifier": "tagbar",
-	"template_path": "templates/tagbar.j2",
-	"meta_path": "metas/tagbar.json",
+	"template": "tagbar.j2",
 	"vundle_installation": "majutsushi/tagbar"
 }

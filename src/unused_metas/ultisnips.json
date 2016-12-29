@@ -11,8 +11,7 @@
 	"advanced": false,
 	"installed": true,
 	"identifier": "ultisnips",
-	"template_path": "templates/ultisnips.j2",
-	"meta_path": "metas/ultisnips.json",
+	"template": "ultisnips.j2",
 	"vundle_installation": "SirVer/ultisnips",
 	"options": {
 		"expand_trigger": {

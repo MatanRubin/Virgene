@@ -1,16 +1,10 @@
 {
 	"name": "Disable arrow keys",
-	"type": "Keymap",
-	"short_description": "Forces you to use hjkl and motions to move around",
-	"detailed_description": null,
+	"feature_type": "Snippet",
+	"description": "Forces you to use hjkl and motions to move around",
 	"default_value": false,
 	"enabled": true,
 	"category": "Keymap",
-	"notes": null,
-	"popularity": 5,
-	"advanced": false,
 	"installed": true,
-	"identifier": "disable_arrow_keys",
-	"template_path": "templates/disable_arrow_keys.j2",
-	"meta_path": "metas/disable_arrow_keys.json"
+	"template": "disable_arrow_keys.j2"
 }

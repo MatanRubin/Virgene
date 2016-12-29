@@ -13,13 +13,14 @@ Options:
 from datetime import datetime
 from os import path
 import json
-from json import JSONEncoder
+import os
 import sys
 from docopt import docopt
 from functional import seq
 import jinja2
-
-SRC_DIR = path.abspath(path.dirname(__file__))
+from src.default_encoder import DefaultEncoder
+from src.snippet_feature import SnippetFeature
+from src.common_defs import *
 
 class Config:
 
@@ -35,16 +36,25 @@ class Config:
         date_created = config_json["date_created"]
         features_json = config_json["features"]
         config = Config()
-        features = [Feature.from_meta_json(x) for x in features_json]
-        for feature in features:
-            config.add_feature(feature)
+        for feature_json in features_json:
+            if feature_json["feature_type"] == "Snippet":
+                feature = SnippetFeature.from_meta_json(feature_json)
+                config.add_feature(feature)
+            # TODO add here other types of features
+            # TODO consider extracting to FeatureDecoder helper class
         return config
 
 
 class ConfigMgr:
 
     def __init__(self):
-        pass
+        self.jinja_env = jinja2.Environment(
+            loader=jinja2.PackageLoader('src', 'templates'),
+            trim_blocks=True,
+            lstrip_blocks=True,
+            line_statement_prefix='%',
+            line_comment_prefix='#'
+        )
 
     def load_config_path(self, config_path):
         with open(config_path) as config_file:
@@ -58,28 +68,33 @@ class ConfigMgr:
             return json.load(json_file)
 
 
-    @staticmethod
-    def generate(input_path, output_path=None):
-        abs_input_path = path.join(SRC_DIR, input_path)
-        with open(abs_input_path) as input_file:
+    def generate(self, input_path, output_path=None):
+        with open(input_path) as input_file:
             input_json = json.load(input_file)
         config = Config.from_json(input_json)
-        env = jinja2.Environment(loader=jinja2.PackageLoader('src', 'templates'),
-                                 trim_blocks=True, lstrip_blocks=True,
-                                 line_statement_prefix='%',
-                                 line_comment_prefix='#')
         # template = env.get_template('vimrc.j2')
         # print(template.render(configuration=config))
-        template = env.get_template('ultisnips.j2')
+
+        # handling just snippets for now
+        snippets = []
+        for feature in config.features:
+            template = self.jinja_env.get_template(feature.template)
+            snippets.append(template.render())
+        vimrc_template = self.jinja_env.get_template("vimrc_template.j2")
+        print(vimrc_template.render(snippets=snippets, plugins=[], has_plugins=False))
+        exit(0)
+
+        plugin_configurations = ConfigMgr.generate_plugin_configurations()
+        template = self.jinja_env.get_template('ultisnips.j2')
         ultisnips_plugin = [x for x in config.features if x.name == "UltiSnips"][0]
         print(template.render(plugin=ultisnips_plugin))
 
-        template = env.get_template('ctrlp.j2')
+        template = self.jinja_env.get_template('ctrlp.j2')
         ctrl_plugin = [x for x in config.features if x.name == "CtrlP"][0]
         print(template.render(plugin=ctrl_plugin))
         exit(0)
 
-        templates = [path.join(SRC_DIR, x.template_path) for x in config.features]
+        templates = [path.join(TEMPLATES_DIR, x.template_path) for x in config.features]
         output_file = open(output_path, 'w') if output_path is not None else sys.stdout
         for template_path in templates:
             with open(template_path) as template_file:
@@ -99,10 +114,10 @@ class ConfigMgr:
     @staticmethod
     def write_config(config, output_path):
         if output_path is None:
-            print(json.dumps(config, cls=MyEncoder, indent=4))
+            print(json.dumps(config, cls=DefaultEncoder, indent=4))
         else:
             with open(output_path, 'w') as output_file:
-                output_file.write(json.dumps(config, cls=MyEncoder, indent=4))
+                output_file.write(json.dumps(config, cls=DefaultEncoder, indent=4))
 
     @classmethod
     def default_config(cls, output_path=None):
@@ -112,24 +127,18 @@ class ConfigMgr:
 
     @staticmethod
     def read_installed_features():
-        # TODO recursively find all meta files
-        meta_files = [
-            'metas/emacs_bindings_insert_mode.json',
-            'metas/disable_arrow_keys.json',
-            'metas/ctrlp.json',
-            'metas/tagbar.json',
-            'metas/ultisnips.json',
-        ]
-        return seq(meta_files).map(lambda x: path.join(SRC_DIR, x))\
-            .map(lambda x: Feature.from_meta_path(x))\
+        meta_files = os.listdir(METAS_DIR)
+        return seq(meta_files).map(lambda x: path.join(METAS_DIR, x))\
+            .map(lambda x: SnippetFeature.from_meta_path(x))\
             .filter(lambda x: x.installed == True)\
             .to_list()
 
+    def generate_plugin_configurations(self, plugin_jsons):
+        return seq(plugin_jsons) \
+            .map(lambda plugin_json: (plugin_json, self.jinja_env.get_template(plugin_json.template_path))) \
+            .map(lambda plugin_json, template: template.render(plugin=plugin_json)) \
+            .to_list()
 
-class MyEncoder(JSONEncoder):
-
-    def default(self, o):
-        return o.__dict__
 
 class Option:
     
@@ -154,114 +163,34 @@ class Option:
         return Option.from_meta_json(meta_json)
 
 
-class Feature:
-
-    def __init__(self, name, short_description, detailed_description,
-                 default_value, enabled, category, notes, popularity, advanced,
-                 installed, identifier, template_path, meta_path,
-                 vundle_installation=None, options=None):
-        self.name = name
-        self.short_description = short_description
-        self.detailed_description = detailed_description
-        self.default_value = default_value
-        self.enabled = enabled
-        self.category = category
-        self.notes = notes
-        self.popularity = popularity
-        self.advanced = advanced
-        self.installed = installed
-        self.identifier = identifier
-        self.template_path = template_path
-        self.meta_path = meta_path
-        self.vundle_installation = vundle_installation
-        self.options = options
-
-    @staticmethod
-    def from_meta_json(meta_json):
-        vundle_installation = meta_json.get("vundle_installation", None)
-        options = meta_json.get("options", None)
-
-        return Feature(meta_json["name"], meta_json["short_description"],
-                       meta_json["detailed_description"],
-                       meta_json["default_value"], meta_json["enabled"],
-                       meta_json["category"], meta_json["notes"],
-                       meta_json["popularity"], meta_json["advanced"],
-                       meta_json["installed"], meta_json["identifier"],
-                       meta_json["template_path"], meta_json["meta_path"],
-                       vundle_installation, options)
-
-
-    @staticmethod
-    def from_meta_path(meta_path):
-        with open(meta_path) as meta_file:
-            meta_json = json.load(meta_file)
-
-        return Feature.from_meta_json(meta_json)
-
-    def generate(self):
-        with open(self._template_path) as template_file:
-            return template_file.read()
-
-    @staticmethod
-    def as_feature():
-        pass
-
-
-def test_feature():
-    # feature = Feature("emacs_integration", "none", "long desc", True, True,
-    #                   "plugins", "N/A", 10, True, True, "emacs",
-    #                   "templates/emacs_bindings_insert_mode.j2",
-    #                   "metas/emacs_bindings_insert_mode.json")
-    feature = Feature.from_meta_path("metas/emacs_bindings_insert_mode.json")
-    print(json.dumps(feature, indent=4, cls=MyEncoder))
-
-def test_config():
-    config = Config()
-    feature1 = Feature.from_meta_path("metas/emacs_bindings_insert_mode.json")
-    feature2 = Feature.from_meta_path("metas/disable_arrow_keys.json")
-    config.add_feature(feature1)
-    config.add_feature(feature2)
-    print(json.dumps(config, indent=4, cls=MyEncoder))
-
-
-def jinja2_test():
-    env = jinja2.Environment(loader=jinja2.PackageLoader('src', 'templates'),
-                             lstrip_blocks=True, trim_blocks=True,
-                             line_statement_prefix='%', line_comment_prefix='#')
-    template = env.get_template('vimrc.j2')
-    plugins = [
-        {
-            "name": "CtrlP",
-            "short_description": "easily navigate between files"
-        },
-        {
-            "name": "NERTTree",
-            "short_description": "Directory tree"
-        },
-        {
-            "name": "YouCompleteMe",
-            "short_description": "Autocompletion"
-        },
-        {
-            "name": "syntactic",
-            "short_description": "syntax checks"
-        },{
-            "name": "Tagbar",
-            "short_description": "show tags in files"
-        },
-        {
-            "name": "Align",
-            "short_description": "Quickly align to columns"
-        },
+# TODO have this function as a helper function in each Feature class and
+# add to the tests automatic verification of all metas
+def verify_meta_json_schemas():
+    fields = [
+        "name",
+        "description",
+        "default_value",
+        "enabled",
+        "category",
+        "installed",
+        "template_path",
+        "template",
+        "vundle_installation",
+        "options",
     ]
-    print(template.render(plugins=plugins))
 
+    for meta_path in os.listdir('./metas/'):
+        with open(path.join(METAS_DIR, meta_path)) as meta_file:
+            meta = json.load(meta_file)
+        if seq(meta.keys()).map(lambda x: x not in fields).any():
+            print("meta file '{}' has redundant fields".format(meta_path))
+        if seq(fields).map(lambda x: x not in meta.keys()).any():
+            print("meta file '{}' is missing fields".format(meta_path))
 
-def generate_default_vimrc_test():
-    ConfigMgr.default_config("default.json")
-    ConfigMgr.generate("default.json")
 
 if __name__ == '__main__':
+    # verify_meta_json_schemas()
+    # exit(0)
     generate_default_vimrc_test()
     exit(0)
     args = docopt(__doc__, version='vimrcgen 0.1')
@@ -270,3 +199,9 @@ if __name__ == '__main__':
         ConfigMgr.default_config(args['<output_file>'])
     elif args['generate']:
         ConfigMgr.generate(args['<input_json>'], args['<output_file>'])
+
+# TODO:
+# 0. Finish cleaning up jsons.
+# 1. Split code into files
+# 2. Make Feature a base class and then inherit into BuiltinFeature, PluginFeature, SnippetFeature, etc
+# 3. Think about how to generate the actual vimrc...
