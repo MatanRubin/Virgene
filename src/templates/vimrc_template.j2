@@ -2,17 +2,19 @@
 " Check it out at https://github.com/MatanRubin/my.vim
 " . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-" . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 " . . . . . . . . . . . . VIM BUILT IN SETTINGS . . . . . . . . . . . . . . . .
-" . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+% for builtin in builtins
+{{ builtin }}
+% endfor
 
-% block builtin_settings
-% endblock builtin_settings
 
 % block autoinstallations
 % endblock autoinstallations
 
+
 % if has_plugins
+" . . . . . . . . . . . . . . INSTALLED PLUGINS  . . . . . . . . . . . . . . . .
+
 "This line must exist before vundle configuration
 filetype off                              " required
 set rtp+=~/.vim/bundle/Vundle.vim         " required
@@ -21,17 +23,17 @@ Plugin 'VundleVim/Vundle.vim'             " required
 
 " Installed plugins
 % for plugin in plugins
-Plugin "{{ plugin.name }}"
+Plugin "{{ plugin.vundle_installation }}"
 % endfor
+
 
 call vundle#end()                         " required
 filetype plugin indent on                 " required
 % endif
 
+
 % if plugin_configurations is defined
-" . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 " . . . . . . . . . . . . PLUGIN CONFIGURATIONS . . . . . . . . . . . . . . . .
-" . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 % for plugin_config in plugin_configurations
 {{ plugin_config }}
@@ -41,9 +43,7 @@ filetype plugin indent on                 " required
 
 
 % if snippets is defined
-" . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 " . . . . . . . . . . . . . USEFUL SNIPPETS . . . . . . . . . . . . . . . . . .
-" . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 % for snippet in snippets
 {{ snippet }}

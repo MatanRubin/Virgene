@@ -20,7 +20,10 @@ from functional import seq
 import jinja2
 from src.default_encoder import DefaultEncoder
 from src.snippet_feature import SnippetFeature
+from src.plugin_feature import PluginFeature
+from src.feature_base import FeatureBase
 from src.common_defs import *
+from src.feature_decoder import FeatureDecoder
 
 class Config:
 
@@ -37,11 +40,8 @@ class Config:
         features_json = config_json["features"]
         config = Config()
         for feature_json in features_json:
-            if feature_json["feature_type"] == "Snippet":
-                feature = SnippetFeature.from_meta_json(feature_json)
-                config.add_feature(feature)
-            # TODO add here other types of features
-            # TODO consider extracting to FeatureDecoder helper class
+            feature = FeatureDecoder.decode(feature_json)
+            config.add_feature(feature)
         return config
 
 
@@ -53,7 +53,7 @@ class ConfigMgr:
             trim_blocks=True,
             lstrip_blocks=True,
             line_statement_prefix='%',
-            line_comment_prefix='#'
+            line_comment_prefix='##'
         )
 
     def load_config_path(self, config_path):
@@ -67,6 +67,13 @@ class ConfigMgr:
         with open(json_path) as json_file:
             return json.load(json_file)
 
+    # XXX this is convenient but not very good
+    def get_template(self, template_string_or_path):
+        if path.exists(path.join(TEMPLATES_DIR, template_string_or_path)):
+            template = self.jinja_env.get_template(template_string_or_path)
+        else:
+            template = jinja2.Template(template_string_or_path)
+        return template
 
     def generate(self, input_path, output_path=None):
         with open(input_path) as input_file:
@@ -75,31 +82,34 @@ class ConfigMgr:
         # template = env.get_template('vimrc.j2')
         # print(template.render(configuration=config))
 
-        # handling just snippets for now
+
+        features_by_type = seq(config.features) \
+            .group_by(lambda x: x.feature_type) \
+            .group_by_key() \
+            .to_dict()
+
+        snippet_features = features_by_type["Snippet"][0]
+        plugin_features = features_by_type["Plugin"][0]
+        builtin_features = features_by_type["Builtin"][0]
+
+        # TODO can probably write this in a single block
         snippets = []
+        plugins = []
+        plugin_configurations = []
+        builtins = []
+
         for feature in config.features:
-            template = self.jinja_env.get_template(feature.template)
-            snippets.append(template.render())
+            template = self.get_template(feature.template)
+            if feature.feature_type == "Snippet":
+                snippets.append(template.render(snippet=feature))
+            if feature.feature_type == "Plugin":
+                plugins.append(feature)
+                plugin_configurations.append(template.render(plugin=feature))
+            if feature.feature_type == "Builtin":
+                builtins.append(template.render(builtin=feature))
+
         vimrc_template = self.jinja_env.get_template("vimrc_template.j2")
-        print(vimrc_template.render(snippets=snippets, plugins=[], has_plugins=False))
-        exit(0)
-
-        plugin_configurations = ConfigMgr.generate_plugin_configurations()
-        template = self.jinja_env.get_template('ultisnips.j2')
-        ultisnips_plugin = [x for x in config.features if x.name == "UltiSnips"][0]
-        print(template.render(plugin=ultisnips_plugin))
-
-        template = self.jinja_env.get_template('ctrlp.j2')
-        ctrl_plugin = [x for x in config.features if x.name == "CtrlP"][0]
-        print(template.render(plugin=ctrl_plugin))
-        exit(0)
-
-        templates = [path.join(TEMPLATES_DIR, x.template_path) for x in config.features]
-        output_file = open(output_path, 'w') if output_path is not None else sys.stdout
-        for template_path in templates:
-            with open(template_path) as template_file:
-                output_file.write(template_file.read())
-        output_file.close()
+        print(vimrc_template.render(snippets=snippets, plugins=plugin_features, plugin_configurations=plugin_configurations, builtins=builtins, has_plugins=True))
 
 
 
@@ -129,7 +139,7 @@ class ConfigMgr:
     def read_installed_features():
         meta_files = os.listdir(METAS_DIR)
         return seq(meta_files).map(lambda x: path.join(METAS_DIR, x))\
-            .map(lambda x: SnippetFeature.from_meta_path(x))\
+            .map(lambda x: FeatureDecoder.decode_from_path(x))\
             .filter(lambda x: x.installed == True)\
             .to_list()
 

@@ -1,16 +1,11 @@
 {
 	"name": "UltiSnips",
-	"type": "Plugin",
-	"short_description": "The ultimate snippet solution for Vim",
-	"detailed_description": null,
+	"feature_type": "Plugin",
+	"description": "The ultimate snippet solution for Vim",
 	"default_value": false,
 	"enabled": true,
 	"category": "Plugin",
-	"notes": null,
-	"popularity": 10,
-	"advanced": false,
 	"installed": true,
-	"identifier": "ultisnips",
 	"template": "ultisnips.j2",
 	"vundle_installation": "SirVer/ultisnips",
 	"options": {

@@ -1,0 +1,11 @@
+{
+	"name": "Highlight search results",
+	"feature_type": "Builtin",
+	"description": "Highlights search results",
+	"default_value": true,
+	"enabled": true,
+	"category": "Builtin",
+	"installed": true,
+	"template": "set hlsearch"
+}
+
