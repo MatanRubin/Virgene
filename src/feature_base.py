@@ -7,6 +7,7 @@ class FeatureBase:
 
     def __init__(self, name, feature_type, description, default_value, enabled,
                  category, installed):
+        # TODO add support for display_name
         self.name = name
         self.feature_type = feature_type
         self.description = description

@@ -104,18 +104,17 @@ class ConfigMgr:
                 snippets.append(template.render(snippet=feature))
             if feature.feature_type == "Plugin":
                 plugins.append(feature)
-                plugin_configurations.append(template.render(plugin=feature))
+                options = {x.name: x.default_value for x in feature.options}
+                plugin_configurations.append(template.render(plugin=feature, options=options))
             if feature.feature_type == "Builtin":
                 builtins.append(template.render(builtin=feature))
 
         vimrc_template = self.jinja_env.get_template("vimrc_template.j2")
         print(vimrc_template.render(snippets=snippets, plugins=plugin_features, plugin_configurations=plugin_configurations, builtins=builtins, has_plugins=True))
 
-
-
-    @classmethod
-    def get_default_config(cls):
-        installed_features = cls.read_installed_features()
+    @staticmethod
+    def get_default_config():
+        installed_features = ConfigMgr.read_installed_features()
         config = Config()
         for feature in installed_features:
             config.add_feature(feature)
@@ -129,10 +128,10 @@ class ConfigMgr:
             with open(output_path, 'w') as output_file:
                 output_file.write(json.dumps(config, cls=DefaultEncoder, indent=4))
 
-    @classmethod
-    def default_config(cls, output_path=None):
-        config = cls.get_default_config()
-        cls.write_config(config, output_path)
+    @staticmethod
+    def default_config(output_path=None):
+        config = ConfigMgr.get_default_config()
+        ConfigMgr.write_config(config, output_path)
 
 
     @staticmethod
@@ -148,29 +147,6 @@ class ConfigMgr:
             .map(lambda plugin_json: (plugin_json, self.jinja_env.get_template(plugin_json.template_path))) \
             .map(lambda plugin_json, template: template.render(plugin=plugin_json)) \
             .to_list()
-
-
-class Option:
-    
-    def __init__(self, name, description, default_value, value):
-        self.name = name
-        self.description = description
-        self.default_value = default_value
-        self.value = value
-
-
-    @staticmethod
-    def from_meta_json(meta_json):
-        return Option(meta_json["name"], meta_json["description"],
-                       meta_json["default_value"], meta_json["value"])
-
-
-    @staticmethod
-    def from_meta_path(meta_path):
-        with open(meta_path) as meta_file:
-            meta_json = json.load(meta_file)
-
-        return Option.from_meta_json(meta_json)
 
 
 # TODO have this function as a helper function in each Feature class and
@@ -199,10 +175,6 @@ def verify_meta_json_schemas():
 
 
 if __name__ == '__main__':
-    # verify_meta_json_schemas()
-    # exit(0)
-    generate_default_vimrc_test()
-    exit(0)
     args = docopt(__doc__, version='vimrcgen 0.1')
 
     if args['default-config']:

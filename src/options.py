@@ -1,4 +1,4 @@
-# TODO: need to assert default value is legal
+# TODO: support multiple selection options
 
 class Option:
 
@@ -7,7 +7,7 @@ class Option:
         self.name = name
         self.default_value = default_value
         self.value = None
-        self.option_type = None
+        self.option_type = "Option"
 
     def __eq__(self, other):
         if isinstance(other, self.__class__):
@@ -26,14 +26,23 @@ class Option:
         if self.value is None:
             self.value = self.default_value
 
+    def set_value(self, value):
+        self.value = value
+
+    @staticmethod
+    def from_json(option_json):
+        return Option(option_json["name"],
+                      option_json["default_value"], option_json["description"])
+
+
 
 class BooleanOption(Option):
 
     def __init__(self, name, default_value, description):
         if type(default_value) is not bool:
             raise ValueError("default_value not of type bool")
-        super().__init__(name=name, default_value=default_value,
-                         description=description)
+        super().__init__(name=name,
+                         default_value=default_value, description=description)
         self.option_type = "Boolean"
 
     def set_value(self, value):
@@ -43,7 +52,8 @@ class BooleanOption(Option):
 
     @staticmethod
     def from_json(option_json):
-        return BooleanOption(option_json["name"], option_json["default_value"],
+        return BooleanOption(option_json["name"],
+                             option_json["default_value"],
                              option_json["description"])
 
 
@@ -67,8 +77,10 @@ class ChoiceOption(Option):
 
     @staticmethod
     def from_json(option_json):
-        return ChoiceOption(option_json["name"], option_json["default_value"],
-                            option_json["description"], option_json["choices"])
+        return ChoiceOption(option_json["name"],
+                            option_json["default_value"],
+                            option_json["description"],
+                            option_json["choices"])
 
 
 class KeymapOption(Option):
@@ -84,7 +96,8 @@ class KeymapOption(Option):
 
     @staticmethod
     def from_json(option_json):
-        return KeymapOption(option_json["name"], option_json["default_value"],
+        return KeymapOption(option_json["name"],
+                            option_json["default_value"],
                             option_json["description"])
 
 
@@ -93,6 +106,7 @@ class OptionDecoder:
     @staticmethod
     def from_json(option_json):
         decoders = {
+            "Option": Option.from_json,
             "Keymap": KeymapOption.from_json,
             "Boolean": BooleanOption.from_json,
             "Choice": ChoiceOption.from_json,

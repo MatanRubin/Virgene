@@ -8,14 +8,14 @@ class FeatureDecoder:
 
     @staticmethod
     def decode(meta_json):
-        constructors = {
+        decoders = {
             "Plugin": PluginFeature.from_meta_json,
             "Snippet": SnippetFeature.from_meta_json,
             "Builtin": BuiltinFeature.from_meta_json,
         }
 
-        feature_ctor = constructors[meta_json["feature_type"]]
-        return feature_ctor(meta_json)
+        decoder = decoders[meta_json["feature_type"]]
+        return decoder(meta_json)
 
     @staticmethod
     def decode_from_path(meta_path):

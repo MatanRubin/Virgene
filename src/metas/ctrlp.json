@@ -8,24 +8,29 @@
     "installed": true,
     "template": "ctrlp.j2",
     "vundle_installation": "ctrlpvim/ctrlp.vim",
-    "options": {
-        "ctrlp_cmd": {
-            "name": "CtrlP Command",
+    "options":
+    [
+        {
+            "name": "ctrlp_cmd",
+            "option_type": "Option",
+            "pretty_name": "CtrlP Command",
             "description": "Which mode should CtrlP start in",
-            "default_value": "CtrlPMixed",
-            "value": "CtrlPMixed"
+            "default_value": "CtrlPMixed"
         },
-        "ctrlp_extensions": {
-            "name": "CtrlP Extensions",
+        {
+            "name": "ctrlp_extensions",
+            "option_type": "Option",
+            "pretty_name": "CtrlP Extensions",
             "description": "bla bla",
-            "default_value": "['dir', 'mixed']",
-            "value": "['dir', 'mixed']"
+            "default_value": "['dir', 'mixed']"
         },
-        "ctrlp_working_path_mode": {
-            "name": "CtrlP working path mode",
+        {
+            "name": "ctrlp_working_path_mode",
+            "option_type": "Choice",
+            "choices": ["c", "a", "r", "w", "0"],
+            "pretty_name": "CtrlP working path mode",
             "description": "bli bla",
-            "default_value": "ra",
-            "value": "ra"
+            "default_value": "r"
         }
-    }
+    ]
 }

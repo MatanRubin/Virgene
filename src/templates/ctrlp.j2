@@ -2,16 +2,16 @@
 
 % block plugin_options
 
-% if plugin.options.ctrlp_cmd is defined
-let g:ctrlp_cmd = '{{ plugin.options.ctrlp_cmd.value }}'
+% if options.ctrlp_cmd is defined
+let g:ctrlp_cmd = '{{ options.ctrlp_cmd }}'
 % endif
 
-% if plugin.options.ctrlp_extensions is defined
-let g:ctrlp_extensions = {{ plugin.options.ctrlp_extensions.value }}
+% if options.ctrlp_extensions is defined
+let g:ctrlp_extensions = {{ options.ctrlp_extensions }}
 % endif
 
-% if plugin.options.ctrlp_working_path_mode is defined
-let g:ctrlp_working_path_mode = '{{ plugin.options.ctrlp_working_path_mode.value }}'
+% if options.ctrlp_working_path_mode is defined
+let g:ctrlp_working_path_mode = '{{ options.ctrlp_working_path_mode }}'
 % endif
 
 % endblock
