@@ -7,6 +7,20 @@ class Option:
         self.name = name
         self.default_value = default_value
         self.value = None
+        self.option_type = None
+
+    def __eq__(self, other):
+        if isinstance(other, self.__class__):
+            return self.__dict__ == other.__dict__
+        return NotImplemented
+
+    def __ne__(self, other):
+        if isinstance(other, self.__class__):
+            return not self.__eq__(other)
+        return NotImplemented
+
+    def __hash__(self):
+        return hash(tuple(sorted(self.__dict__.items())))
 
     def realize(self):
         if self.value is None:
@@ -16,9 +30,11 @@ class Option:
 class BooleanOption(Option):
 
     def __init__(self, name, default_value, description):
-        assert type(default_value) is bool
+        if type(default_value) is not bool:
+            raise ValueError("default_value not of type bool")
         super().__init__(name=name, default_value=default_value,
                          description=description)
+        self.option_type = "Boolean"
 
     def set_value(self, value):
         if type(value) is not bool:
@@ -36,9 +52,12 @@ class ChoiceOption(Option):
     def __init__(self, name, default_value, description, choices):
         if type(choices) not in (list, tuple):
             raise ValueError("choices must be a list/tuple of choices")
+        if default_value not in choices:
+            raise ValueError("default_value not in choices")
         super().__init__(name=name, default_value=default_value,
                          description=description)
         self.choices = tuple(choices)
+        self.option_type = "Choice"
 
     def set_value(self, choice):
         if choice not in self.choices:
@@ -55,7 +74,8 @@ class ChoiceOption(Option):
 class KeymapOption(Option):
 
     def __init__(self, name, default_value, description):
-        super().__init__(name, default_value, None)
+        super().__init__(name, default_value, description)
+        self.option_type = "Keymap"
 
     def set_value(self, value):
         if type(value) is not str:
@@ -67,6 +87,7 @@ class KeymapOption(Option):
         return KeymapOption(option_json["name"], option_json["default_value"],
                             option_json["description"])
 
+
 class OptionDecoder:
 
     @staticmethod
@@ -76,5 +97,5 @@ class OptionDecoder:
             "Boolean": BooleanOption.from_json,
             "Choice": ChoiceOption.from_json,
         }
-        decoder = option_json["option_type"]
+        decoder = decoders[option_json["option_type"]]
         return decoder(option_json)
