@@ -22,7 +22,8 @@
             "option_type": "Option",
             "pretty_name": "CtrlP Extensions",
             "description": "bla bla",
-            "default_value": "['dir', 'mixed']"
+            "default_value": "['dir', 'mixed']",
+            "value": "mixed"
         },
         {
             "name": "ctrlp_working_path_mode",

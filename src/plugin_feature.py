@@ -35,3 +35,7 @@ class PluginFeature(FeatureBase):
             meta_json = json.load(meta_file)
 
         return PluginFeature.from_meta_json(meta_json)
+
+    def realize_options(self):
+        for option in self.options:
+            option.realize()

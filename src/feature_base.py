@@ -37,7 +37,6 @@ class FeatureBase:
                            meta_json["category"],
                            meta_json["installed"])
 
-
     @staticmethod
     def from_meta_path(meta_path):
         with open(path.join(METAS_DIR, meta_path)) as meta_file:
