@@ -1,6 +1,6 @@
 from os import path
 import json
-from src.common_defs import METAS_DIR
+from src.common_defs import FEATURES_DIR
 
 
 class FeatureBase:
@@ -38,16 +38,16 @@ class FeatureBase:
 
 
     @staticmethod
-    def from_meta_json(meta_json):
-        return FeatureBase(meta_json["name"], meta_json["feature_type"],
-                           meta_json["description"],
-                           meta_json["default_value"], meta_json["enabled"],
-                           meta_json["category"],
-                           meta_json["installed"])
+    def from_feature_json(feature_json):
+        return FeatureBase(feature_json["name"], feature_json["feature_type"],
+                           feature_json["description"],
+                           feature_json["default_value"], feature_json["enabled"],
+                           feature_json["category"],
+                           feature_json["installed"])
 
     @staticmethod
-    def from_meta_path(meta_path):
-        with open(path.join(METAS_DIR, meta_path)) as meta_file:
-            meta_json = json.load(meta_file)
+    def from_feature_path(feature_path):
+        with open(path.join(FEATURES_DIR, feature_path)) as feature_file:
+            feature_json = json.load(feature_file)
 
-        return FeatureBase.from_meta_json(meta_json)
+        return FeatureBase.from_feature_json(feature_json)

@@ -34,18 +34,18 @@ class BuiltinFeature(FeatureBase):
                                  self.category, self.installed, self.template)
 
     @staticmethod
-    def from_meta_json(meta_json):
-        return BuiltinFeature(meta_json["name"], meta_json["feature_type"],
-                              meta_json["description"],
-                              meta_json["default_value"], meta_json["enabled"],
-                              meta_json["category"],
-                              meta_json["installed"],
-                              meta_json["template"])
+    def from_feature_json(feature_json):
+        return BuiltinFeature(feature_json["name"], feature_json["feature_type"],
+                              feature_json["description"],
+                              feature_json["default_value"], feature_json["enabled"],
+                              feature_json["category"],
+                              feature_json["installed"],
+                              feature_json["template"])
 
 
     @staticmethod
-    def from_meta_path(meta_path):
-        with open(path.join(SRC_DIR, 'metas', meta_path)) as meta_file:
-            meta_json = json.load(meta_file)
+    def from_feature_path(feature_path):
+        with open(path.join(SRC_DIR, 'features', feature_path)) as feature_file:
+            feature_json = json.load(feature_file)
 
-        return SnippetFeature.from_meta_json(meta_json)
+        return BuiltinFeature.from_feature_json(feature_json)

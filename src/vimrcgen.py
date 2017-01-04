@@ -138,8 +138,8 @@ class ConfigMgr:
 
     @staticmethod
     def read_installed_features():
-        meta_files = os.listdir(METAS_DIR)
-        return seq(meta_files).map(lambda x: path.join(METAS_DIR, x))\
+        feature_files = os.listdir(FEATURES_DIR)
+        return seq(feature_files).map(lambda x: path.join(FEATURES_DIR, x))\
             .map(lambda x: FeatureDecoder.decode_from_path(x))\
             .filter(lambda x: x.installed == True)\
             .to_list()
@@ -152,8 +152,8 @@ class ConfigMgr:
 
 
 # TODO have this function as a helper function in each Feature class and
-# add to the tests automatic verification of all metas
-def verify_meta_json_schemas():
+# add to the tests automatic verification of all features
+def verify_feature_json_schemas():
     fields = [
         "name",
         "description",
@@ -167,13 +167,13 @@ def verify_meta_json_schemas():
         "options",
     ]
 
-    for meta_path in os.listdir('./metas/'):
-        with open(path.join(METAS_DIR, meta_path)) as meta_file:
-            meta = json.load(meta_file)
-        if seq(meta.keys()).map(lambda x: x not in fields).any():
-            print("meta file '{}' has redundant fields".format(meta_path))
-        if seq(fields).map(lambda x: x not in meta.keys()).any():
-            print("meta file '{}' is missing fields".format(meta_path))
+    for feature_path in os.listdir('./features/'):
+        with open(path.join(FEATURES_DIR, feature_path)) as feature_file:
+            feature = json.load(feature_file)
+        if seq(feature.keys()).map(lambda x: x not in fields).any():
+            print("feature file '{}' has redundant fields".format(feature_path))
+        if seq(fields).map(lambda x: x not in feature.keys()).any():
+            print("feature file '{}' is missing fields".format(feature_path))
 
 
 if __name__ == '__main__':

@@ -7,18 +7,18 @@ from src.builtin_feature import BuiltinFeature
 class FeatureDecoder:
 
     @staticmethod
-    def decode(meta_json):
+    def decode(feature_json):
         decoders = {
-            "Plugin": PluginFeature.from_meta_json,
-            "Snippet": SnippetFeature.from_meta_json,
-            "Builtin": BuiltinFeature.from_meta_json,
+            "Plugin": PluginFeature.from_feature_json,
+            "Snippet": SnippetFeature.from_feature_json,
+            "Builtin": BuiltinFeature.from_feature_json,
         }
 
-        decoder = decoders[meta_json["feature_type"]]
-        return decoder(meta_json)
+        decoder = decoders[feature_json["feature_type"]]
+        return decoder(feature_json)
 
     @staticmethod
-    def decode_from_path(meta_path):
-        with open(meta_path) as meta_file:
-            meta_json = json.load(meta_file)
-        return FeatureDecoder.decode(meta_json)
+    def decode_from_path(feature_path):
+        with open(feature_path) as feature_file:
+            feature_json = json.load(feature_file)
+        return FeatureDecoder.decode(feature_json)

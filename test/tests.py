@@ -13,18 +13,18 @@ from src.common_defs import BUILD_DIR
 #                           default_value=True, enabled=True, category="Base",
 #                           installed=True, template="./templates/ctrlp.j2")
 #     encoded = json.dumps(feature, cls=DefaultEncoder, indent=4)
-#     decoded_feature = FeatureBase.from_meta_json(json.loads(encoded))
+#     decoded_feature = FeatureBase.from_feature_json(json.loads(encoded))
 #     assert(feature == decoded_feature)
 
 
-@pytest.mark.parametrize("feature_class,feature_meta_path", [
+@pytest.mark.parametrize("feature_class,feature_feature_path", [
     (FeatureBase, "hlsearch.json"),
     (PluginFeature, "ctrlp.json")
 ])
-def test_feature_encode_decode(feature_class, feature_meta_path):
-    feature = feature_class.from_meta_path(feature_meta_path)
+def test_feature_encode_decode(feature_class, feature_feature_path):
+    feature = feature_class.from_feature_path(feature_feature_path)
     encoded = json.dumps(feature, cls=DefaultEncoder, indent=4)
-    decoded_feature = feature_class.from_meta_json(json.loads(encoded))
+    decoded_feature = feature_class.from_feature_json(json.loads(encoded))
     assert(feature == decoded_feature)
 
 def test_generate_default_vimrc():

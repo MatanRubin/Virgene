@@ -1,6 +1,6 @@
 from os import path
 import json
-from src.common_defs import METAS_DIR
+from src.common_defs import FEATURES_DIR
 from src.feature_base import FeatureBase
 from src.options import OptionDecoder
 
@@ -25,26 +25,26 @@ class PluginFeature(FeatureBase):
 
 
     @staticmethod
-    def from_meta_json(meta_json):
-        if meta_json["feature_type"] != "Plugin":
-            raise TypeError("wrong feature_type='{}'".format(meta_json["feature_type"]))
+    def from_feature_json(feature_json):
+        if feature_json["feature_type"] != "Plugin":
+            raise TypeError("wrong feature_type='{}'".format(feature_json["feature_type"]))
 
-        options = [OptionDecoder.from_json(x) for x in meta_json.get("options", [])]
+        options = [OptionDecoder.from_json(x) for x in feature_json.get("options", [])]
 
-        return PluginFeature(meta_json["name"], meta_json["feature_type"],
-                             meta_json["description"],
-                             meta_json["default_value"], meta_json["enabled"],
-                             meta_json["category"], meta_json["installed"],
-                             meta_json["template"],
-                             meta_json["vundle_installation"],
+        return PluginFeature(feature_json["name"], feature_json["feature_type"],
+                             feature_json["description"],
+                             feature_json["default_value"], feature_json["enabled"],
+                             feature_json["category"], feature_json["installed"],
+                             feature_json["template"],
+                             feature_json["vundle_installation"],
                              options)
 
     @staticmethod
-    def from_meta_path(meta_path):
-        with open(path.join(METAS_DIR, meta_path)) as meta_file:
-            meta_json = json.load(meta_file)
+    def from_feature_path(feature_path):
+        with open(path.join(FEATURES_DIR, feature_path)) as feature_file:
+            feature_json = json.load(feature_file)
 
-        return PluginFeature.from_meta_json(meta_json)
+        return PluginFeature.from_feature_json(feature_json)
 
     def realize_options(self):
         for option in self.options:
