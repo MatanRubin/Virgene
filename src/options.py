@@ -23,6 +23,10 @@ class Option:
     def __hash__(self):
         return hash(tuple(sorted(self.__dict__.items())))
 
+    def __repr__(self):
+        return "Option(name=%r, default_value=%r, value=%r, description=%r)" % \
+               (self.name, self.default_value, self.value, self.description)
+
     def realize(self):
         if self.value is None:
             self.value = self.default_value
@@ -45,6 +49,11 @@ class BooleanOption(Option):
         super().__init__(name=name, default_value=default_value, value=value,
                          description=description)
         self.option_type = "Boolean"
+
+    def __repr__(self):
+        return "BooleanOption(name=%r, default_value=%r, " \
+               "value=%r, description=%r)" % \
+               (self.name, self.default_value, self.value, self.description)
 
     def set_value(self, value):
         if type(value) is not bool:
@@ -73,6 +82,13 @@ class ChoiceOption(Option):
         self.choices = tuple(choices)
         self.option_type = "Choice"
 
+    def __repr__(self):
+        return "BooleanOption(name=%r, default_value=%r, " \
+               "value=%r, description=%r, choices=%r)" % \
+               (self.name, self.default_value, self.value, self.description,
+                self.choices)
+
+
     def set_value(self, choice):
         if choice not in self.choices:
             raise ValueError("choice '{}' not in choices='{}'"
@@ -92,6 +108,11 @@ class KeymapOption(Option):
     def __init__(self, name, default_value, value, description):
         super().__init__(name, default_value, value, description)
         self.option_type = "Keymap"
+
+    def __repr__(self):
+        return "BooleanOption(name=%r, default_value=%r, " \
+               "value=%r, description=%r)" % \
+               (self.name, self.default_value, self.value, self.description)
 
     def set_value(self, value):
         if type(value) is not str:

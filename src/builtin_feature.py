@@ -26,6 +26,13 @@ class BuiltinFeature(FeatureBase):
     def __hash__(self):
         return hash(tuple(sorted(self.__dict__.items())))
 
+    def __repr__(self, *args, **kwargs):
+        return "BuiltinFeature(name=%r, feature_type=%r, description=%r, " \
+               "default_value=%r, enabled=%r, category=%r, installed=%r, " \
+               "template=%r)" % (self.name, self.feature_type, self.description,
+                                 self.default_value, self.enabled,
+                                 self.category, self.installed, self.template)
+
     @staticmethod
     def from_meta_json(meta_json):
         return BuiltinFeature(meta_json["name"], meta_json["feature_type"],

@@ -25,6 +25,7 @@ from src.feature_base import FeatureBase
 from src.common_defs import *
 from src.feature_decoder import FeatureDecoder
 
+
 class Config:
 
     def __init__(self):
@@ -55,12 +56,12 @@ class ConfigMgr:
             line_statement_prefix='%',
             line_comment_prefix='##'
         )
+        self.config = None
 
     def load_config_path(self, config_path):
         with open(config_path) as config_file:
             config_json = json.load(config_file)
         self.config = Config.from_json(config_json)
-
 
     @staticmethod
     def read_json(json_path):

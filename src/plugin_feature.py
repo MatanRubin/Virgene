@@ -14,6 +14,16 @@ class PluginFeature(FeatureBase):
         self.vundle_installation = vundle_installation
         self.options = options
 
+    def __repr__(self, *args, **kwargs):
+        return "PluginFeature(name=%r, feature_type=%r, description=%r, " \
+               "default_value=%r, enabled=%r, category=%r, installed=%r, " \
+               "template=%r, vundle_installation=%r, options=%r)" % \
+               (self.name, self.feature_type, self.description,
+                self.default_value, self.enabled,
+                self.category, self.installed, self.template,
+                self.vundle_installation, self.options)
+
+
     @staticmethod
     def from_meta_json(meta_json):
         if meta_json["feature_type"] != "Plugin":
