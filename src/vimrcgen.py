@@ -100,6 +100,8 @@ class ConfigMgr:
         builtins = []
 
         for feature in config.features:
+            if not feature.enabled:
+                continue
             template = self.get_template(feature.template)
             if feature.feature_type == "Snippet":
                 snippets.append(template.render(snippet=feature))
@@ -112,7 +114,7 @@ class ConfigMgr:
                 builtins.append(template.render(builtin=feature))
 
         vimrc_template = self.jinja_env.get_template("vimrc_template.j2")
-        print(vimrc_template.render(snippets=snippets, plugins=plugin_features, plugin_configurations=plugin_configurations, builtins=builtins, has_plugins=True))
+        print(vimrc_template.render(snippets=snippets, plugins=plugins, plugin_configurations=plugin_configurations, builtins=builtins, has_plugins=True))
 
     @staticmethod
     def get_default_config():
@@ -178,11 +180,12 @@ def verify_feature_json_schemas():
 
 if __name__ == '__main__':
     args = docopt(__doc__, version='vimrcgen 0.1')
+    config_mgr = ConfigMgr()
 
     if args['default-config']:
-        ConfigMgr.default_config(args['<output_file>'])
+        config_mgr.default_config(args['<output_file>'])
     elif args['generate']:
-        ConfigMgr.generate(args['<input_json>'], args['<output_file>'])
+        config_mgr.generate(args['<input_json>'], args['<output_file>'])
 
 # TODO:
 # 0. Finish cleaning up jsons.

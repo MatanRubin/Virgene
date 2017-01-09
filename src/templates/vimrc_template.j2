@@ -2,17 +2,18 @@
 " Check it out at https://github.com/MatanRubin/my.vim
 " . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
+% if builtins|length > 0
 " . . . . . . . . . . . . VIM BUILT IN SETTINGS . . . . . . . . . . . . . . . .
 % for builtin in builtins
 {{ builtin }}
 % endfor
-
+% endif
 
 % block autoinstallations
 % endblock autoinstallations
 
 
-% if has_plugins
+% if plugins|length > 0
 " . . . . . . . . . . . . . . INSTALLED PLUGINS  . . . . . . . . . . . . . . . .
 
 "This line must exist before vundle configuration
@@ -31,8 +32,7 @@ call vundle#end()                         " required
 filetype plugin indent on                 " required
 % endif
 
-
-% if plugin_configurations is defined
+% if plugin_configurations|length > 0
 " . . . . . . . . . . . . PLUGIN CONFIGURATIONS . . . . . . . . . . . . . . . .
 
 % for plugin_config in plugin_configurations
@@ -42,7 +42,7 @@ filetype plugin indent on                 " required
 % endif
 
 
-% if snippets is defined
+% if snippets|length > 0
 " . . . . . . . . . . . . . USEFUL SNIPPETS . . . . . . . . . . . . . . . . . .
 
 % for snippet in snippets
