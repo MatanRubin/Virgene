@@ -18,12 +18,12 @@ import sys
 from docopt import docopt
 from functional import seq
 import jinja2
-from src.default_encoder import DefaultEncoder
-from src.snippet_feature import SnippetFeature
-from src.plugin_feature import PluginFeature
-from src.feature_base import FeatureBase
-from src.common_defs import *
-from src.feature_decoder import FeatureDecoder
+from .default_encoder import DefaultEncoder
+from .snippet_feature import SnippetFeature
+from .plugin_feature import PluginFeature
+from .feature_base import FeatureBase
+from .common_defs import *
+from .feature_decoder import FeatureDecoder
 
 
 class Config:
@@ -50,7 +50,7 @@ class ConfigMgr:
 
     def __init__(self):
         self.jinja_env = jinja2.Environment(
-            loader=jinja2.PackageLoader('src', 'templates'),
+            loader=jinja2.FileSystemLoader(path.join(SRC_DIR, 'templates')),
             trim_blocks=True,
             lstrip_blocks=True,
             line_statement_prefix='%',

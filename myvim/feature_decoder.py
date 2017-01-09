@@ -1,7 +1,7 @@
 import json
-from src.plugin_feature import PluginFeature
-from src.snippet_feature import SnippetFeature
-from src.builtin_feature import BuiltinFeature
+from .plugin_feature import PluginFeature
+from .snippet_feature import SnippetFeature
+from .builtin_feature import BuiltinFeature
 
 
 class FeatureDecoder:

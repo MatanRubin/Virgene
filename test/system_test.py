@@ -1,11 +1,11 @@
 from os import path
 import pytest
 import json
-from src.feature_base import FeatureBase
-from src.plugin_feature import PluginFeature
-from src.default_encoder import DefaultEncoder
-from src.vimrcgen import ConfigMgr
-from src.common_defs import BUILD_DIR
+from myvim.feature_base import FeatureBase
+from myvim.plugin_feature import PluginFeature
+from myvim.default_encoder import DefaultEncoder
+from myvim.myvim import ConfigMgr
+from myvim.common_defs import BUILD_DIR
 
 #
 # def test_feature_base_encode_decode():

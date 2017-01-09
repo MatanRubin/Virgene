@@ -1,6 +1,6 @@
 from os import path
 import json
-from src.common_defs import FEATURES_DIR
+from .common_defs import FEATURES_DIR
 
 
 class FeatureBase:

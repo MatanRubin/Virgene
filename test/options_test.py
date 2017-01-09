@@ -1,10 +1,10 @@
 import pytest
 import json
-from src.options import BooleanOption
-from src.options import ChoiceOption
-from src.options import KeymapOption
-from src.options import OptionDecoder
-from src.default_encoder import DefaultEncoder
+from myvim.options import BooleanOption
+from myvim.options import ChoiceOption
+from myvim.options import KeymapOption
+from myvim.options import OptionDecoder
+from myvim.default_encoder import DefaultEncoder
 
 
 def test_boolean_option_set():
