@@ -18,12 +18,9 @@ import sys
 from docopt import docopt
 from functional import seq
 import jinja2
-from .default_encoder import DefaultEncoder
-from .snippet_feature import SnippetFeature
-from .plugin_feature import PluginFeature
-from .feature_base import FeatureBase
-from .common_defs import *
-from .feature_decoder import FeatureDecoder
+from default_encoder import DefaultEncoder
+from common_defs import *
+from feature_decoder import FeatureDecoder
 
 
 class Config:
@@ -114,7 +111,7 @@ class ConfigMgr:
                 builtins.append(template.render(builtin=feature))
 
         vimrc_template = self.jinja_env.get_template("vimrc_template.j2")
-        print(vimrc_template.render(snippets=snippets, plugins=plugins, plugin_configurations=plugin_configurations, builtins=builtins, has_plugins=True))
+        return vimrc_template.render(snippets=snippets, plugins=plugins, plugin_configurations=plugin_configurations, builtins=builtins, has_plugins=True)
 
     @staticmethod
     def get_default_config():
@@ -127,7 +124,7 @@ class ConfigMgr:
     @staticmethod
     def write_config(config, output_path):
         if output_path is None:
-            print(json.dumps(config, cls=DefaultEncoder, indent=4))
+            return json.dumps(config, cls=DefaultEncoder, indent=4)
         else:
             with open(output_path, 'w') as output_file:
                 output_file.write(json.dumps(config, cls=DefaultEncoder, indent=4))
@@ -135,7 +132,7 @@ class ConfigMgr:
     @staticmethod
     def default_config(output_path=None):
         config = ConfigMgr.get_default_config()
-        ConfigMgr.write_config(config, output_path)
+        return ConfigMgr.write_config(config, output_path)
 
 
     @staticmethod

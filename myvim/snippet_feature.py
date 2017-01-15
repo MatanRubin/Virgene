@@ -1,7 +1,7 @@
 from os import path
 import json
-from .common_defs import SRC_DIR
-from .feature_base import FeatureBase
+from common_defs import SRC_DIR
+from feature_base import FeatureBase
 
 
 class SnippetFeature(FeatureBase):

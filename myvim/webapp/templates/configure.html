@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Configure your vimrc</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<h1>Configure your vimrc</h1>
+<form action="vimrc" method="post">
+<h2>Builtin Features</h2>
+{% for builtin in builtins %}
+{{ builtin|safe }}
+{% endfor %}
+<h2>Plugins</h2>
+{% for plugin in plugins %}
+{{ plugin|safe }}
+{% endfor %}
+<h2>Useful Snippets</h2>
+{% for snippet in snippets %}
+{{ snippet|safe }}
+{% endfor %}
+<input type="submit" class="btn btn-lg btn-success" value="Generate vimrc">
+</form>
+
+
+</body>
+</html>

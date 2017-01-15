@@ -1,8 +1,8 @@
 from os import path
 import json
-from .common_defs import FEATURES_DIR
-from .feature_base import FeatureBase
-from .options import OptionDecoder
+from common_defs import FEATURES_DIR
+from feature_base import FeatureBase
+from options import OptionDecoder
 
 class PluginFeature(FeatureBase):
 

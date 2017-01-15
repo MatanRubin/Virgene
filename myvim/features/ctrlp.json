@@ -12,7 +12,8 @@
     [
         {
             "name": "ctrlp_cmd",
-            "option_type": "Option",
+            "option_type": "Choice",
+            "choices": ["CtrlPMixed", "CtrlPStam", "CtrlPDrek"],
             "pretty_name": "CtrlP Command",
             "description": "Which mode should CtrlP start in",
             "default_value": "CtrlPMixed"
