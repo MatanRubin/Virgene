@@ -83,7 +83,7 @@ class ChoiceOption(Option):
         self.option_type = "Choice"
 
     def __repr__(self):
-        return "BooleanOption(name=%r, default_value=%r, " \
+        return "ChoiceOption(name=%r, default_value=%r, " \
                "value=%r, description=%r, choices=%r)" % \
                (self.name, self.default_value, self.value, self.description,
                 self.choices)
@@ -103,6 +103,44 @@ class ChoiceOption(Option):
                             option_json["choices"])
 
 
+class MultipleSelectionOption(Option):
+
+    def __init__(self, name, default_value, value, description, choices):
+        value = tuple(value) if value else ()
+        if type(choices) not in (list, tuple):
+            raise ValueError("choices must be a list/tuple of choices")
+        if any([x not in choices for x in default_value]):
+            raise ValueError("default_value not in choices")
+        if value is not None and any([x not in choices for x in value]):
+            raise ValueError("choice '{}' not in choices='{}'"
+                             .format(value, choices))
+        super().__init__(name=name, default_value=tuple(default_value),
+                         value=value, description=description)
+        self.choices = tuple(choices)
+        self.option_type = "MultipleSelection"
+
+    def __repr__(self):
+        return "MultipleSelectionOption(name=%r, default_value=%r, " \
+               "value=%r, description=%r, choices=%r)" % \
+               (self.name, self.default_value, self.value, self.description,
+                self.choices)
+
+    def set_value(self, selection):
+        selection = tuple(selection)
+        if any([x not in self.choices for x in selection]):
+            raise ValueError("selection {} not in choices='{}'"
+                             .format(selection, self.choices))
+        self.value = selection
+
+    @staticmethod
+    def from_json(option_json):
+        return MultipleSelectionOption(option_json["name"],
+                                       option_json["default_value"],
+                                       option_json.get("value", None),
+                                       option_json["description"],
+                                       option_json["choices"])
+
+
 class KeymapOption(Option):
 
     def __init__(self, name, default_value, value, description):
@@ -110,7 +148,7 @@ class KeymapOption(Option):
         self.option_type = "Keymap"
 
     def __repr__(self):
-        return "BooleanOption(name=%r, default_value=%r, " \
+        return "KeymapOption(name=%r, default_value=%r, " \
                "value=%r, description=%r)" % \
                (self.name, self.default_value, self.value, self.description)
 
@@ -135,6 +173,7 @@ class OptionDecoder:
             "Keymap": KeymapOption.from_json,
             "Boolean": BooleanOption.from_json,
             "Choice": ChoiceOption.from_json,
+            "MultipleSelection": MultipleSelectionOption.from_json,
         }
         decoder = decoders[option_json["option_type"]]
         return decoder(option_json)

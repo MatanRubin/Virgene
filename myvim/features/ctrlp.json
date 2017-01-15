@@ -28,7 +28,7 @@
         },
         {
             "name": "ctrlp_working_path_mode",
-            "option_type": "Choice",
+            "option_type": "MultipleSelection",
             "choices": ["c", "a", "r", "w", "0"],
             "pretty_name": "CtrlP working path mode",
             "description": "bli bla",

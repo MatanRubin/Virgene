@@ -1,6 +1,6 @@
 from os import path
 import json
-from common_defs import FEATURES_DIR
+from myvim.common_defs import FEATURES_DIR
 
 
 class FeatureBase:

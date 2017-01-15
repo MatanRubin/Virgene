@@ -1,6 +1,7 @@
 import pytest
 import json
 from myvim.options import BooleanOption
+from myvim.options import MultipleSelectionOption
 from myvim.options import ChoiceOption
 from myvim.options import KeymapOption
 from myvim.options import OptionDecoder
@@ -55,3 +56,10 @@ def test_choice_encode_decode():
     encoded = json.dumps(choice_opt, cls=DefaultEncoder)
     decoded = OptionDecoder.from_json(json.loads(encoded))
     assert choice_opt == decoded
+
+def test_multiple_selection_encode_decode():
+    ms_opt = MultipleSelectionOption("MS option", ("A", "B"), None, "MS opt",
+                                     ["A", "B", "C"])
+    encoded = json.dumps(ms_opt, cls=DefaultEncoder)
+    decoded = OptionDecoder.from_json(json.loads(encoded))
+    assert ms_opt == decoded

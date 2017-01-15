@@ -18,9 +18,9 @@ import sys
 from docopt import docopt
 from functional import seq
 import jinja2
-from default_encoder import DefaultEncoder
-from common_defs import *
-from feature_decoder import FeatureDecoder
+from myvim.default_encoder import DefaultEncoder
+from myvim.common_defs import *
+from myvim.feature_decoder import FeatureDecoder
 
 
 class Config:

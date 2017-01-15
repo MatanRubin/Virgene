@@ -1,6 +1,6 @@
 from os import path
-from myvim import BUILD_DIR
-from myvim import ConfigMgr
+from myvim.common_defs import BUILD_DIR
+from myvim.myvim_file import ConfigMgr
 from flask import Flask, render_template, request
 app = Flask(__name__)
 

@@ -4,7 +4,7 @@ import json
 from myvim.feature_base import FeatureBase
 from myvim.plugin_feature import PluginFeature
 from myvim.default_encoder import DefaultEncoder
-from myvim.myvim import ConfigMgr
+from myvim.myvim_file import ConfigMgr
 from myvim.common_defs import BUILD_DIR
 
 #
