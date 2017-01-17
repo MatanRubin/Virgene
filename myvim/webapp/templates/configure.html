@@ -10,19 +10,27 @@
 <body>
 <h1>Configure your vimrc</h1>
 <form action="vimrc" method="post">
-<h2>Builtin Features</h2>
-{% for builtin in builtins %}
-{{ builtin|safe }}
-{% endfor %}
-<h2>Plugins</h2>
-{% for plugin in plugins %}
-{{ plugin|safe }}
-{% endfor %}
-<h2>Useful Snippets</h2>
-{% for snippet in snippets %}
-{{ snippet|safe }}
-{% endfor %}
-<input type="submit" class="btn btn-lg btn-success" value="Generate vimrc">
+    <div>
+        <h2>Builtin Features</h2>
+        {% for builtin in builtins %}
+        {{ builtin|safe }}
+        {% endfor %}
+    </div>
+    <div>
+        <h2>Plugins</h2>
+        {% for plugin in plugins %}
+        {{ plugin|safe }}
+        {% endfor %}
+    </div>
+    <div>
+        <h2>Useful Snippets</h2>
+        {% for snippet in snippets %}
+        {{ snippet|safe }}
+        {% endfor %}
+    </div>
+    <div>
+        <input type="submit" class="btn btn-lg btn-success" value="Generate vimrc">
+    </div>
 </form>
 
 

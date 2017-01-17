@@ -28,11 +28,16 @@ def configure():
     return result
 
 
+def form_to_json(form):
+    form_dict = {x[0]: x[1] for x in form}
+    print(form_dict)
+
+
 @app.route("/vimrc", methods=['POST'])
 def vimrc():
     test_config_path = path.join(BUILD_DIR, "default.json")
     config_mgr.default_config(test_config_path)
-    print(request.form)
+    form_json = form_to_json(request.form)
     return r"<pre>" + config_mgr.generate(test_config_path) + r"</pre>"
 
 

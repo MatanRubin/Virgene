@@ -7,5 +7,29 @@
 	"category": "Plugin",
 	"installed": true,
 	"template": "tagbar.j2",
-	"vundle_installation": "majutsushi/tagbar"
+	"vundle_installation": "majutsushi/tagbar",
+	"options":
+    [
+        {
+            "name": "tagbar_ctags_bin",
+            "option_type": "Option",
+            "pretty_name": "Ctags executable",
+            "description": "Use this option to specify the location of your ctags executable. Only needed if it is not in one of the directories in your $PATH environment variable.",
+            "default_value": ""
+        },
+        {
+            "name": "tagbar_left",
+            "option_type": "Option",
+            "pretty_name": "Tagbar left",
+            "description": "By default the Tagbar window will be opened on the right-hand side of vim. Set this option to open it on the left instead.",
+            "default_value": 0
+        },
+        {
+            "name": "tagbar_width",
+            "option_type": "Option",
+            "pretty_name": "Tagbar width",
+            "description": "Width of the Tagbar window in characters.",
+            "default_value": 40
+        }
+    ]
 }
