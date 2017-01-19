@@ -37,11 +37,11 @@ class BuiltinFeature(FeatureBase):
     def from_feature_json(feature_json):
         return BuiltinFeature(feature_json["name"], feature_json["feature_type"],
                               feature_json["description"],
-                              feature_json["default_value"], feature_json["enabled"],
+                              feature_json["default_value"], feature_json[
+                                  "enabled"],
                               feature_json["category"],
                               feature_json["installed"],
                               feature_json["template"])
-
 
     @staticmethod
     def from_feature_path(feature_path):

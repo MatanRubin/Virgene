@@ -1,11 +1,12 @@
-import pytest
 import json
-from myvim.options import BooleanOption
-from myvim.options import MultipleSelectionOption
-from myvim.options import ChoiceOption
-from myvim.options import KeymapOption
-from myvim.options import OptionDecoder
+
+import pytest
+
 from myvim.default_encoder import DefaultEncoder
+from myvim.options import BooleanOption
+from myvim.options import ChoiceOption
+from myvim.options import MultipleSelectionOption
+from myvim.options import OptionDecoder
 
 
 def test_boolean_option_set():
@@ -33,15 +34,15 @@ def test_choice_option_set_bad_value():
     with pytest.raises(ValueError):
         choice_opt.set_value("D")
 
+
 def test_boolean_option_bad_default_value():
     with pytest.raises(ValueError):
-        bool_opt = BooleanOption("my_bool_opt", "bad default", None, "bool opt")
+        BooleanOption("my_bool_opt", "bad default", None, "bool opt")
 
 
 def test_choice_option_bad_default_value():
     with pytest.raises(ValueError):
-        choice_opt = ChoiceOption("choice option", "D", None, "choice opt",
-                                  ["A", "B", "C"])
+        ChoiceOption("choice option", "D", None, "choice opt", ["A", "B", "C"])
 
 
 def test_bool_encode_decode():
@@ -50,12 +51,14 @@ def test_bool_encode_decode():
     decoded = OptionDecoder.from_json(json.loads(encoded))
     assert bool_opt == decoded
 
+
 def test_choice_encode_decode():
     choice_opt = ChoiceOption("choice option", "A", None, "choice opt",
                               ["A", "B", "C"])
     encoded = json.dumps(choice_opt, cls=DefaultEncoder)
     decoded = OptionDecoder.from_json(json.loads(encoded))
     assert choice_opt == decoded
+
 
 def test_multiple_selection_encode_decode():
     ms_opt = MultipleSelectionOption("MS option", ("A", "B"), None, "MS opt",

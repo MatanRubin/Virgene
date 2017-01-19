@@ -4,6 +4,7 @@ from myvim.common_defs import FEATURES_DIR
 from myvim.feature_base import FeatureBase
 from myvim.options import OptionDecoder
 
+
 class PluginFeature(FeatureBase):
 
     def __init__(self, name, feature_type, description, default_value, enabled,
@@ -23,18 +24,21 @@ class PluginFeature(FeatureBase):
                 self.category, self.installed, self.template,
                 self.vundle_installation, self.options)
 
-
     @staticmethod
     def from_feature_json(feature_json):
         if feature_json["feature_type"] != "Plugin":
-            raise TypeError("wrong feature_type='{}'".format(feature_json["feature_type"]))
+            raise TypeError(
+                "wrong feature_type='{}'".format(feature_json["feature_type"]))
 
-        options = [OptionDecoder.from_json(x) for x in feature_json.get("options", [])]
+        options = [OptionDecoder.from_json(x)
+                   for x in feature_json.get("options", [])]
 
         return PluginFeature(feature_json["name"], feature_json["feature_type"],
                              feature_json["description"],
-                             feature_json["default_value"], feature_json["enabled"],
-                             feature_json["category"], feature_json["installed"],
+                             feature_json["default_value"], feature_json[
+                                 "enabled"],
+                             feature_json["category"], feature_json[
+                                 "installed"],
                              feature_json["template"],
                              feature_json["vundle_installation"],
                              options)

@@ -32,16 +32,15 @@ class SnippetFeature(FeatureBase):
                                  self.default_value, self.enabled,
                                  self.category, self.installed, self.template)
 
-
     @staticmethod
     def from_feature_json(feature_json):
         return SnippetFeature(feature_json["name"], feature_json["feature_type"],
                               feature_json["description"],
-                              feature_json["default_value"], feature_json["enabled"],
+                              feature_json["default_value"], feature_json[
+                                  "enabled"],
                               feature_json["category"],
                               feature_json["installed"],
                               feature_json["template"])
-
 
     @staticmethod
     def from_feature_path(feature_path):

@@ -88,7 +88,6 @@ class ChoiceOption(Option):
                (self.name, self.default_value, self.value, self.description,
                 self.choices)
 
-
     def set_value(self, choice):
         if choice not in self.choices:
             raise ValueError("choice '{}' not in choices='{}'"

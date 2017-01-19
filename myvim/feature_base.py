@@ -36,12 +36,12 @@ class FeatureBase:
                 self.default_value, self.enabled,
                 self.category, self.installed)
 
-
     @staticmethod
     def from_feature_json(feature_json):
         return FeatureBase(feature_json["name"], feature_json["feature_type"],
                            feature_json["description"],
-                           feature_json["default_value"], feature_json["enabled"],
+                           feature_json["default_value"], feature_json[
+                               "enabled"],
                            feature_json["category"],
                            feature_json["installed"])
 
