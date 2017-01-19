@@ -51,3 +51,6 @@ class FeatureBase:
             feature_json = json.load(feature_file)
 
         return FeatureBase.from_feature_json(feature_json)
+
+    def apply_config(self, feature_config: dict):
+        pass

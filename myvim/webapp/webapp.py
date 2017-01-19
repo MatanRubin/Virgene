@@ -57,8 +57,8 @@ def form_to_json(form):
 @app.route("/vimrc", methods=['POST'])
 def vimrc():
     default_config = config_mgr.build_default_config()
-    form_json = form_to_json(request.form)
-    print(form_json)
+    form_dict = form_to_json(request.form)
+    default_config.apply_config(form_dict)
     return r"<pre>" + config_mgr.generate(default_config) + r"</pre>"
 
 

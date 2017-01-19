@@ -14,6 +14,7 @@ class PluginFeature(FeatureBase):
         self.template = template
         self.vundle_installation = vundle_installation
         self.options = options
+        self._options_by_name = {x.name: x for x in options}
 
     def __repr__(self, *args, **kwargs):
         return "PluginFeature(name=%r, feature_type=%r, description=%r, " \
@@ -50,6 +51,12 @@ class PluginFeature(FeatureBase):
 
         return PluginFeature.from_feature_json(feature_json)
 
-    def realize_options(self):
+    def fill_in_defaults(self):
         for option in self.options:
             option.realize()
+
+    def apply_config(self, feature_config: dict):
+        for option_dict in feature_config["options"]:  # type: dict
+            option_name = list(option_dict.keys())[0]
+            option = self._options_by_name[option_name]
+            option.set_value(option_dict[option_name])

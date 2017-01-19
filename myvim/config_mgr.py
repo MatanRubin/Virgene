@@ -58,7 +58,7 @@ class ConfigMgr:
             if feature.feature_type == "Snippet":
                 snippets.append(template.render(snippet=feature))
             if feature.feature_type == "Plugin":
-                feature.realize_options()
+                feature.fill_in_defaults()
                 plugins.append(feature)
                 options = {x.name: x.value for x in feature.options}
                 plugin_configs.append(
