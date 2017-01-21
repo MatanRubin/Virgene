@@ -4,7 +4,7 @@
 	"description": "Displays lines numbers on the left side of the buffer",
 	"default_value": true,
 	"enabled": true,
-	"category": "Builtin",
+	"category": "General",
 	"installed": true,
 	"template": "set number"
 }

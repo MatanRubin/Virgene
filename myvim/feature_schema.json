@@ -1,0 +1,104 @@
+{
+  "title": "Feature",
+  "description": "Vimya feature definition",
+  "type": "object",
+  "properties": {
+    "name": {
+      "description": "Name of the feature",
+      "type": "string"
+    },
+    "feature_type": {
+      "description": "Type of the feature",
+      "type": "string",
+      "enum": [
+        "Builtin",
+        "Plugin",
+        "Snippet"
+      ]
+    },
+    "description": {
+      "description": "Detailed description of the feature",
+      "type": "string"
+    },
+    "default_value": {
+      "description": "Default value of the feature (might remove)",
+      "type": "boolean"
+    },
+    "enabled": {
+      "description": "Is the feature enabled or disabled by default",
+      "type": "boolean"
+    },
+    "category": {
+      "description": "Which category should this plugin belong to",
+      "type": "string",
+      "enum": [
+        "Colorschemes",
+        "Indentation",
+        "Keymap",
+        "Syntax Highlighting",
+        "Autocompletion",
+        "Version Control",
+        "Navigation",
+        "General"
+      ]
+    },
+    "installed": {
+      "description": "Weather this feature will be displayed in Vimya website",
+      "type": "boolean"
+    },
+    "template_path": {
+      "description": "Name of the feature's template file under the 'templates' directory",
+      "type": "string"
+    },
+    "template": {
+      "description": "If the feature's template is a sinlge line, you can avoid adding a template file and just specify it here. If both template_path and template are used - behaviour is not defined",
+      "type": "string"
+    },
+    "vundle_installation": {
+      "description": "For 'Plugin' type features only - the line required by Vundle to install the feature",
+      "type": "string"
+    },
+    "options": {
+      "description": "A list of Options for this feature",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "#/definitions/option"
+      }
+    }
+  },
+  "required": ["name", "feature_type", "description", "enabled", "category", "installed"],
+  "definitions": {
+    "option": {
+      "properties": {
+        "name": {
+          "description": "Option name",
+          "type": "string"
+        },
+        "option_type": {
+          "description": "Type of option",
+          "type": "string",
+          "enum": ["Option", "Boolean", "Choice", "MultipleSelection"]
+        },
+        "choices": {
+          "description": "For 'Choice' and 'MultipleSelection' options, a list of options to choose from",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "pretty_name": {
+          "description": "The name that will be displayed in Vimya website",
+          "type": "string"
+        },
+        "description": {
+          "description": "Option description",
+          "type": "string"
+        },
+        "default_value": {
+          "description": "Default value for this option"
+        }
+      }
+    }
+  }
+}

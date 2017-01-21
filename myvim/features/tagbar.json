@@ -4,7 +4,7 @@
 	"description": "Vim plugin that displays tags in a window, ordered by scope",
 	"default_value": false,
 	"enabled": true,
-	"category": "Plugin",
+	"category": "Navigation",
 	"installed": true,
 	"template": "tagbar.j2",
 	"vundle_installation": "majutsushi/tagbar",

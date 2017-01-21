@@ -4,7 +4,7 @@
 	"description": "Highlights search results",
 	"default_value": true,
 	"enabled": true,
-	"category": "Builtin",
+	"category": "General",
 	"installed": true,
 	"template": "set hlsearch"
 }

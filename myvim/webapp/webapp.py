@@ -59,7 +59,8 @@ def vimrc():
     default_config = config_mgr.build_default_config()
     form_dict = form_to_json(request.form)
     default_config.apply_config(form_dict)
-    return r"<pre>" + config_mgr.generate(default_config) + r"</pre>"
+    vimrc_str = config_mgr.generate(default_config)
+    return r"<pre>" + vimrc_str + r"</pre>"
 
 
 if __name__ == "__main__":
