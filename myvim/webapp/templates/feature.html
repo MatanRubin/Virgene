@@ -10,7 +10,8 @@
         {% if option.option_type is equalto "Boolean" %}
         <p><input type="checkbox" name="{{ feature.name }}[{{ option.name }}]" value=true>{{ option.pretty_name }}</p>
         {% elif option.option_type is equalto "Choice" %}
-        <p>{{ option.pretty_name }} - {{ option.description }}
+        <p>
+            {{ option.pretty_name }} - {{ option.description }}
             <select name="{{ feature.name }}[{{ option.name }}]">
                 {% for choice in option.choices %}
                 <option value="{{ choice }}">{{ choice }}</option>
@@ -18,7 +19,8 @@
             </select>
         </p>
         {% elif option.option_type is equalto "MultipleSelection" %}
-        <p>{{ option.pretty_name }} - {{ option.description }}
+        <p>
+            {{ option.pretty_name }} - {{ option.description }}<br>
             <select multiple name="{{ feature.name }}[{{ option.name }}]">
                 {% for choice in option.choices %}
                 <option value="{{ choice }}">{{ choice }}</option>
@@ -26,8 +28,11 @@
             </select>
         </p>
         {% else %}
-        <p><input type="text" name="{{ feature.name }}[{{ option.name }}]" value="{{ option.default_value }}">{{ option.pretty_name }}:</p>
+        <p>
+            {{ option.name }}: <input type="text" name="{{ feature.name }}[{{ option.name }}]" value="{{ option.default_value }}"><br>
             <sub>{{ option.description }}</sub>
+        </p>
+
 
         {% endif %}
         {% endfor %}
