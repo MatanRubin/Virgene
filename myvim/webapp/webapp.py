@@ -1,4 +1,5 @@
 import itertools
+import html
 
 from flask import Flask, render_template, request
 
@@ -60,7 +61,7 @@ def vimrc():
     form_dict = form_to_json(request.form)
     default_config.apply_config(form_dict)
     vimrc_str = config_mgr.generate(default_config)
-    return r"<pre>" + vimrc_str + r"</pre>"
+    return r"<pre>" + html.escape(vimrc_str) + r"</pre>"
 
 
 if __name__ == "__main__":
