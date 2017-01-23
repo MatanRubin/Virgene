@@ -125,7 +125,8 @@ class MultipleSelectionOption(Option):
                 self.choices)
 
     def set_value(self, selection):
-        selection = list(selection)
+        if type(selection) is not list:
+            selection = [selection]
         if any([x not in self.choices for x in selection]):
             raise ValueError("selection {} not in choices='{}'"
                              .format(selection, self.choices))
