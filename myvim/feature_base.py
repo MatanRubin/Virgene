@@ -5,10 +5,10 @@ from myvim.common_defs import FEATURES_DIR
 
 class FeatureBase:
 
-    def __init__(self, name, feature_type, description, default_value, enabled,
-                 category, installed):
-        # TODO add support for display_name
+    def __init__(self, name, identifier, feature_type, description,
+                 default_value, enabled, category, installed):
         self.name = name
+        self.identifier = identifier
         self.feature_type = feature_type
         self.description = description
         self.default_value = default_value
@@ -38,10 +38,12 @@ class FeatureBase:
 
     @staticmethod
     def from_feature_json(feature_json):
-        return FeatureBase(feature_json["name"], feature_json["feature_type"],
+        return FeatureBase(feature_json["name"],
+                           feature_json["identifier"],
+                           feature_json["feature_type"],
                            feature_json["description"],
-                           feature_json["default_value"], feature_json[
-                               "enabled"],
+                           feature_json["default_value"],
+                           feature_json["enabled"],
                            feature_json["category"],
                            feature_json["installed"])
 

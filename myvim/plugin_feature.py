@@ -7,14 +7,15 @@ from myvim.options import OptionDecoder
 
 class PluginFeature(FeatureBase):
 
-    def __init__(self, name, feature_type, description, default_value, enabled,
-                 category, installed, template, vundle_installation, options):
-        super().__init__(name, feature_type, description, default_value,
+    def __init__(self, name, identifier, feature_type, description,
+                 default_value, enabled, category, installed, template,
+                 vundle_installation, options):
+        super().__init__(name, identifier, feature_type, description, default_value,
                          enabled, category, installed)
         self.template = template
         self.vundle_installation = vundle_installation
         self.options = options
-        self._options_by_name = {x.name: x for x in options}
+        self._options_by_id = {x.identifier: x for x in options}
 
     def __repr__(self, *args, **kwargs):
         return "PluginFeature(name=%r, feature_type=%r, description=%r, " \
@@ -34,12 +35,14 @@ class PluginFeature(FeatureBase):
         options = [OptionDecoder.from_json(x)
                    for x in feature_json.get("options", [])]
 
-        return PluginFeature(feature_json["name"], feature_json["feature_type"],
+        return PluginFeature(feature_json["name"],
+                             feature_json["identifier"],
+                             feature_json["feature_type"],
                              feature_json["description"],
-                             feature_json["default_value"], feature_json[
-                                 "enabled"],
-                             feature_json["category"], feature_json[
-                                 "installed"],
+                             feature_json["default_value"],
+                             feature_json["enabled"],
+                             feature_json["category"],
+                             feature_json["installed"],
                              feature_json["template"],
                              feature_json["vundle_installation"],
                              options)
@@ -56,6 +59,10 @@ class PluginFeature(FeatureBase):
             option.realize()
 
     def apply_config(self, feature_config: dict):
-        for option_name in feature_config:  # type: dict
-            option = self._options_by_name[option_name]
-            option.set_value(feature_config[option_name])
+        for option_id in feature_config:  # type: dict
+            # FIXME decide if enabled is an option or part of feature
+            if option_id == "enabled":
+                self.enabled = feature_config[option_id]
+            else:
+                option = self._options_by_id[option_id]
+                option.set_value(feature_config[option_id])

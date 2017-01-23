@@ -3,8 +3,9 @@
 
 class Option:
 
-    def __init__(self, name, default_value, value, description):
+    def __init__(self, name, identifier, default_value, value, description):
         self.description = description
+        self.identifier = identifier
         self.name = name
         self.default_value = default_value
         self.value = value
@@ -36,17 +37,20 @@ class Option:
 
     @staticmethod
     def from_json(option_json):
-        return Option(option_json["name"], option_json["default_value"],
+        return Option(option_json["name"],
+                      option_json["identifier"],
+                      option_json["default_value"],
                       option_json.get("value", None),
                       option_json["description"])
 
 
 class BooleanOption(Option):
 
-    def __init__(self, name, default_value, value, description):
+    def __init__(self, name, identifier, default_value, value, description):
         if type(default_value) is not bool:
             raise ValueError("default_value not of type bool")
-        super().__init__(name=name, default_value=default_value, value=value,
+        super().__init__(name=name, identifier=identifier,
+                         default_value=default_value, value=value,
                          description=description)
         self.option_type = "Boolean"
 
@@ -62,14 +66,16 @@ class BooleanOption(Option):
 
     @staticmethod
     def from_json(option_json):
-        return BooleanOption(option_json["name"], option_json["default_value"],
+        return BooleanOption(option_json["name"], option_json["identifier"],
+                             option_json["default_value"],
                              option_json.get("value", None),
                              option_json["description"])
 
 
 class ChoiceOption(Option):
 
-    def __init__(self, name, default_value, value, description, choices):
+    def __init__(self, name, identifier, default_value, value, description,
+                 choices):
         if type(choices) not in (list, tuple):
             raise ValueError("choices must be a list/tuple of choices")
         if default_value not in choices:
@@ -77,7 +83,8 @@ class ChoiceOption(Option):
         if value is not None and value not in choices:
             raise ValueError("choice '{}' not in choices='{}'"
                              .format(value, choices))
-        super().__init__(name=name, default_value=default_value, value=value,
+        super().__init__(name=name, identifier=identifier,
+                         default_value=default_value, value=value,
                          description=description)
         self.choices = tuple(choices)
         self.option_type = "Choice"
@@ -96,7 +103,8 @@ class ChoiceOption(Option):
 
     @staticmethod
     def from_json(option_json):
-        return ChoiceOption(option_json["name"], option_json["default_value"],
+        return ChoiceOption(option_json["name"], option_json["identifier"],
+                            option_json["default_value"],
                             option_json.get("value", None),
                             option_json["description"],
                             option_json["choices"])
@@ -104,7 +112,8 @@ class ChoiceOption(Option):
 
 class MultipleSelectionOption(Option):
 
-    def __init__(self, name, default_value, value, description, choices):
+    def __init__(self, name, identifier, default_value, value,
+                 description, choices):
         value = tuple(value) if value else ()
         if type(choices) not in (list, tuple):
             raise ValueError("choices must be a list/tuple of choices")
@@ -113,7 +122,8 @@ class MultipleSelectionOption(Option):
         if value is not None and any([x not in choices for x in value]):
             raise ValueError("choice '{}' not in choices='{}'"
                              .format(value, choices))
-        super().__init__(name=name, default_value=tuple(default_value),
+        super().__init__(name=name, identifier=identifier,
+                         default_value=tuple(default_value),
                          value=value, description=description)
         self.choices = tuple(choices)
         self.option_type = "MultipleSelection"
@@ -135,6 +145,7 @@ class MultipleSelectionOption(Option):
     @staticmethod
     def from_json(option_json):
         return MultipleSelectionOption(option_json["name"],
+                                       option_json["identifier"],
                                        option_json["default_value"],
                                        option_json.get("value", None),
                                        option_json["description"],
@@ -143,8 +154,8 @@ class MultipleSelectionOption(Option):
 
 class KeymapOption(Option):
 
-    def __init__(self, name, default_value, value, description):
-        super().__init__(name, default_value, value, description)
+    def __init__(self, name, identifier, default_value, value, description):
+        super().__init__(name, identifier, default_value, value, description)
         self.option_type = "Keymap"
 
     def __repr__(self):
@@ -159,15 +170,17 @@ class KeymapOption(Option):
 
     @staticmethod
     def from_json(option_json):
-        return KeymapOption(option_json["name"], option_json["default_value"],
+        return KeymapOption(option_json["name"],
+                            option_json["identifier"],
+                            option_json["default_value"],
                             option_json.get("value", None),
                             option_json["description"])
 
 
 class NumberOption(Option):
 
-    def __init__(self, name, default_value, value, description):
-        super().__init__(name, default_value, value, description)
+    def __init__(self, name, identifier, default_value, value, description):
+        super().__init__(name, identifier, default_value, value, description)
         self.option_type = "Number"
 
     def __repr__(self):
@@ -184,7 +197,9 @@ class NumberOption(Option):
 
     @staticmethod
     def from_json(option_json):
-        return NumberOption(option_json["name"], option_json["default_value"],
+        return NumberOption(option_json["name"],
+                            option_json["identifier"],
+                            option_json["default_value"],
                             option_json.get("value", None),
                             option_json["description"])
 

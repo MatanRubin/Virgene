@@ -1,5 +1,6 @@
 {
 	"name": "Disable arrow keys",
+	"identifier": "disable_arrow_keys",
 	"feature_type": "Snippet",
 	"description": "Forces you to use hjkl and motions to move around",
 	"default_value": false,

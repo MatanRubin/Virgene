@@ -4,7 +4,11 @@
   "type": "object",
   "properties": {
     "name": {
-      "description": "Name of the feature",
+      "description": "Name of the feature as it will be presented to the user",
+      "type": "string"
+    },
+    "identifier": {
+      "description": "An identifier for the feature to be used in templates",
       "type": "string"
     },
     "feature_type": {
@@ -67,18 +71,22 @@
       }
     }
   },
-  "required": ["name", "feature_type", "description", "enabled", "category", "installed"],
+  "required": ["name", "identifier", "feature_type", "description", "enabled", "category", "installed"],
   "definitions": {
     "option": {
       "properties": {
         "name": {
-          "description": "Option name",
+          "description": "Option name as it will be displayed to the user",
+          "type": "string"
+        },
+        "identifier": {
+          "description": "A unique identifier for the option to use in the feature's template",
           "type": "string"
         },
         "option_type": {
           "description": "Type of option",
           "type": "string",
-          "enum": ["Option", "Boolean", "Choice", "MultipleSelection"]
+          "enum": ["Option", "Boolean", "Choice", "MultipleSelection", "Number"]
         },
         "choices": {
           "description": "For 'Choice' and 'MultipleSelection' options, a list of options to choose from",
@@ -98,7 +106,8 @@
         "default_value": {
           "description": "Default value for this option"
         }
-      }
+      },
+      "required": ["name", "identifier", "option_type", "description", "default_value"]
     }
   }
 }

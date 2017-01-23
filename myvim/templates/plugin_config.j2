@@ -1,7 +1,9 @@
+% if plugin.enabled
 " . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 " {{ plugin.name }} Configuration
-" Plugin description: {{ plugin.short_description }}
+" Plugin description: {{ plugin.description }}
 
 % block plugin_options
     # Plugin options will be inserted here
 % endblock
+% endif

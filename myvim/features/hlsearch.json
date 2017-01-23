@@ -1,5 +1,6 @@
 {
 	"name": "Highlight search results",
+	"identifier": "highlight_search",
 	"feature_type": "Builtin",
 	"description": "Highlights search results",
 	"default_value": true,

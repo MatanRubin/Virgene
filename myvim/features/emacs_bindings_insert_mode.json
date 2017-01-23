@@ -1,5 +1,6 @@
 {
 	"name": "Emacs bindings in insert mode",
+	"identifier": "emacs_bindings_insert_mode",
 	"feature_type": "Snippet",
 	"description": "Adds traditional Emacs key bindings when in insert mode",
 	"default_value": true,

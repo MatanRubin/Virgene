@@ -1,18 +1,18 @@
 <div class="container">
-    <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#{{ feature.template|lower|replace(' ', '')|replace('.', '') }}">{{ feature.name }}</button>
-    <div id="{{ feature.template|lower|replace(' ', '')|replace('.', '') }}" class="collapse">
+    <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#{{ feature.identifier }}">{{ feature.name }}</button>
+    <div id="{{ feature.identifier }}" class="collapse">
         <p><b>{{ feature.description }}</b></p>
         <fieldset>
-        <input type="checkbox" name="{{ feature.name }}[enabled]" value="{{ feature.enabled }}">Enabled
+        <input type="checkbox" name="{{ feature.identifier }}[enabled]" value="{{ feature.enabled }}">Enabled
         {% if feature.options|length > 0 %}
         <h4>{{ feature.name }} Options</h4>
         {% for option in feature.options %}
         {% if option.option_type is equalto "Boolean" %}
-        <p><input type="checkbox" name="{{ feature.name }}[{{ option.name }}]" value="{{ option.default_value }}"> {{ option.name }}</p>
+        <p><input type="checkbox" name="{{ feature.identifier }}[{{ option.identifier }}]" value="{{ option.default_value }}"> {{ option.name }}</p>
         {% elif option.option_type is equalto "Choice" %}
         <p>
             {{ option.pretty_name }} - {{ option.description }}
-            <select name="{{ feature.name }}[{{ option.name }}]">
+            <select name="{{ feature.identifier }}[{{ option.identifier }}]">
                 {% for choice in option.choices %}
                 <option value="{{ choice }}">{{ choice }}</option>
                 {% endfor %}
@@ -21,17 +21,17 @@
         {% elif option.option_type is equalto "MultipleSelection" %}
         <p>
             {{ option.pretty_name }} - {{ option.description }}<br>
-            <select multiple name="{{ feature.name }}[{{ option.name }}]">
+            <select multiple name="{{ feature.identifier }}[{{ option.identifier }}]">
                 {% for choice in option.choices %}
                 <option value="{{ choice }}">{{ choice }}</option>
                 {% endfor %}
             </select>
         </p>
         {% elif option.option_type is equalto "Number" %}
-        <p>{{ option.name }}: <input type="number" name="{{ feature.name }}[{{ option.name }}]" value="{{ option.default_value }}"></p>
+        <p>{{ option.name }}: <input type="number" name="{{ feature.identifier }}[{{ option.identifier }}]" value="{{ option.default_value }}"></p>
         {% else %}
         <p>
-            {{ option.name }}: <input type="text" name="{{ feature.name }}[{{ option.name }}]" value="{{ option.default_value }}"><br>
+            {{ option.name }}: <input type="text" name="{{ feature.identifier }}[{{ option.identifier }}]" value="{{ option.default_value }}"><br>
             <sub>{{ option.description }}</sub>
         </p>
 

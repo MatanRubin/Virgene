@@ -33,21 +33,23 @@ def configure():
     snippets_html = [
         render_template('feature.html', feature=x) for x in snippets]
 
-    result = render_template(
-        "configure.html", builtins=builtins_html, plugins=plugins_html, snippets=snippets_html)
+    result = render_template("configure.html",
+                             builtins=builtins_html,
+                             plugins=plugins_html,
+                             snippets=snippets_html)
     return result
 
 
 def form_to_json(form):
     plugins = {}
     for key in form:
-        feature_name, option_name = key.replace(']', '').split('[')
+        feature_name, option_identifier = key.replace(']', '').split('[')
         value = form.getlist(key)
         if len(value) == 1:
             value = value[0]
         if feature_name not in plugins.keys():
             plugins[feature_name] = {}
-        plugins[feature_name][option_name] = value
+        plugins[feature_name][option_identifier] = value
     return plugins
 
 

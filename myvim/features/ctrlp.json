@@ -1,5 +1,6 @@
 {
     "name": "CtrlP",
+    "identifier": "ctrlp",
     "feature_type": "Plugin",
     "description": "Full path fuzzy file, buffer, mru, tag, ... finder for Vim.",
     "default_value": false,
@@ -11,7 +12,8 @@
     "options":
     [
         {
-            "name": "ctrlp_cmd",
+            "name": "CtrlP Command",
+            "identifier": "ctrlp_cmd",
             "option_type": "Choice",
             "choices": ["CtrlPMixed", "CtrlPStam", "CtrlPDrek"],
             "pretty_name": "CtrlP Command",
@@ -19,7 +21,8 @@
             "default_value": "CtrlPMixed"
         },
         {
-            "name": "ctrlp_extensions",
+            "name": "CtrlP Extensions",
+            "identifier": "ctrlp_extensions",
             "option_type": "MultipleSelection",
             "pretty_name": "CtrlP Extensions",
             "description": "Select which CtrlP extensions to enable",
@@ -27,7 +30,8 @@
             "choices": ["tag", "buffertag", "quickfix", "dir", "rtscript", "undo", "line", "changes", "mixed", "bookmarkdir"]
         },
         {
-            "name": "ctrlp_working_path_mode",
+            "name": "CtrlP working path mode",
+            "identifier": "ctrlp_working_path_mode",
             "option_type": "MultipleSelection",
             "choices": ["c", "a", "r", "w", "0"],
             "pretty_name": "CtrlP working path mode",

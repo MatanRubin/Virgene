@@ -6,10 +6,10 @@ from myvim.feature_base import FeatureBase
 
 class SnippetFeature(FeatureBase):
 
-    def __init__(self, name, feature_type, description, default_value, enabled,
-                 category, installed, template):
-        super().__init__(name, feature_type, description, default_value,
-                         enabled, category, installed)
+    def __init__(self, name, identifier, feature_type, description,
+                 default_value, enabled, category, installed, template):
+        super().__init__(name, identifier, feature_type, description,
+                         default_value, enabled, category, installed)
         self.template = template
 
     def __eq__(self, other):
@@ -34,10 +34,12 @@ class SnippetFeature(FeatureBase):
 
     @staticmethod
     def from_feature_json(feature_json):
-        return SnippetFeature(feature_json["name"], feature_json["feature_type"],
+        return SnippetFeature(feature_json["name"],
+                              feature_json["identifier"],
+                              feature_json["feature_type"],
                               feature_json["description"],
-                              feature_json["default_value"], feature_json[
-                                  "enabled"],
+                              feature_json["default_value"],
+                              feature_json["enabled"],
                               feature_json["category"],
                               feature_json["installed"],
                               feature_json["template"])

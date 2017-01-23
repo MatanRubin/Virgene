@@ -1,5 +1,6 @@
 {
 	"name": "Tagbar",
+    "identifier": "tagbar",
 	"feature_type": "Plugin",
 	"description": "Vim plugin that displays tags in a window, ordered by scope",
 	"default_value": false,
@@ -11,23 +12,23 @@
 	"options":
     [
         {
-            "name": "tagbar_ctags_bin",
+            "name": "Tagbar ctags bin",
+            "identifier": "tagbar_ctags_bin",
             "option_type": "Option",
-            "pretty_name": "Ctags executable",
             "description": "Use this option to specify the location of your ctags executable. Only needed if it is not in one of the directories in your $PATH environment variable.",
             "default_value": ""
         },
         {
-            "name": "tagbar_left",
+            "name": "Tagbar left",
+            "identifier": "tagbar_left",
             "option_type": "Number",
-            "pretty_name": "Tagbar left",
             "description": "By default the Tagbar window will be opened on the right-hand side of vim. Set this option to open it on the left instead.",
             "default_value": 0
         },
         {
-            "name": "tagbar_width",
+            "name": "Tagbar width",
+            "identifier": "tagbar_width",
             "option_type": "Number",
-            "pretty_name": "Tagbar width",
             "description": "Width of the Tagbar window in characters.",
             "default_value": 40
         }

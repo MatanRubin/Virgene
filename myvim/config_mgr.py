@@ -60,7 +60,7 @@ class ConfigMgr:
             if feature.feature_type == "Plugin":
                 feature.fill_in_defaults()
                 plugins.append(feature)
-                options = {x.name: x.value for x in feature.options}
+                options = {x.identifier: x.value for x in feature.options}
                 plugin_configs.append(
                     template.render(plugin=feature, options=options))
             if feature.feature_type == "Builtin":
