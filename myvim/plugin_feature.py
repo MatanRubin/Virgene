@@ -56,7 +56,6 @@ class PluginFeature(FeatureBase):
             option.realize()
 
     def apply_config(self, feature_config: dict):
-        for option_dict in feature_config["options"]:  # type: dict
-            option_name = list(option_dict.keys())[0]
+        for option_name in feature_config:  # type: dict
             option = self._options_by_name[option_name]
-            option.set_value(option_dict[option_name])
+            option.set_value(feature_config[option_name])

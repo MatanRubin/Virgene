@@ -41,17 +41,15 @@ def configure():
 def form_to_json(form):
     # outputs a list of list.
     # each sublist is of the form [<plugin name>, <option name>, <value>]
-    plugin_option_value = [x.replace(']', '').split('[') + [form[x]]
-                           for x in form]
-    sorted_plugin_option_value = sorted(
-        plugin_option_value, key=lambda x: x[0])
-    plugins = [
-        {
-            "name": key,
-            "options": [{option[1]: option[2]} for option in group]
-        }
-        for key, group in itertools.groupby(sorted_plugin_option_value, lambda x: x[0])
-    ]
+    plugins = {}
+    for key in form:
+        feature_name, option_name = key.replace(']', '').split('[')
+        value = form.getlist(key)
+        if len(value) == 1:
+            value = value[0]
+        if feature_name not in plugins.keys():
+            plugins[feature_name] = {}
+        plugins[feature_name][option_name] = value
     return plugins
 
 

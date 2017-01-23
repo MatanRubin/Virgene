@@ -7,7 +7,7 @@ let g:ctrlp_cmd = '{{ options.ctrlp_cmd }}'
 % endif
 
 % if options.ctrlp_extensions is defined
-let g:ctrlp_extensions = '{{ options.ctrlp_extensions }}'
+let g:ctrlp_extensions = {{ options.ctrlp_extensions }}
 % endif
 
 % if options.ctrlp_working_path_mode is defined

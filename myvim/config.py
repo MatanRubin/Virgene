@@ -1,3 +1,4 @@
+from typing import Dict
 from typing import List
 
 from myvim.feature_decoder import FeatureDecoder
@@ -22,7 +23,7 @@ class Config:
         self.features.append(feature)
         self._features_by_name[feature.name] = feature
 
-    def apply_config(self, config: List[dict]):
-        for feature_config in config:  # type: dict
-            feature = self._features_by_name[feature_config["name"]]
-            feature.apply_config(feature_config)
+    def apply_config(self, config):
+        for feature_config in config:
+            feature = self._features_by_name[feature_config]
+            feature.apply_config(config[feature_config])
