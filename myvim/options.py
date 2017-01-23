@@ -164,6 +164,31 @@ class KeymapOption(Option):
                             option_json["description"])
 
 
+class NumberOption(Option):
+
+    def __init__(self, name, default_value, value, description):
+        super().__init__(name, default_value, value, description)
+        self.option_type = "Number"
+
+    def __repr__(self):
+        return "NumberOption(name=%r, default_value=%r, " \
+               "value=%r, description=%r)" % \
+               (self.name, self.default_value, self.value, self.description)
+
+    def set_value(self, value):
+        try:
+            int(value)
+        except ValueError:
+            raise ValueError("NumberOption accepts only integers as values")
+        self.value = value
+
+    @staticmethod
+    def from_json(option_json):
+        return NumberOption(option_json["name"], option_json["default_value"],
+                            option_json.get("value", None),
+                            option_json["description"])
+
+
 class OptionDecoder:
 
     @staticmethod
@@ -174,6 +199,7 @@ class OptionDecoder:
             "Boolean": BooleanOption.from_json,
             "Choice": ChoiceOption.from_json,
             "MultipleSelection": MultipleSelectionOption.from_json,
+            "Number": NumberOption.from_json,
         }
         decoder = decoders[option_json["option_type"]]
         return decoder(option_json)

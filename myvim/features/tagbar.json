@@ -19,14 +19,14 @@
         },
         {
             "name": "tagbar_left",
-            "option_type": "Option",
+            "option_type": "Number",
             "pretty_name": "Tagbar left",
             "description": "By default the Tagbar window will be opened on the right-hand side of vim. Set this option to open it on the left instead.",
             "default_value": 0
         },
         {
             "name": "tagbar_width",
-            "option_type": "Option",
+            "option_type": "Number",
             "pretty_name": "Tagbar width",
             "description": "Width of the Tagbar window in characters.",
             "default_value": 40

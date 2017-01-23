@@ -39,8 +39,6 @@ def configure():
 
 
 def form_to_json(form):
-    # outputs a list of list.
-    # each sublist is of the form [<plugin name>, <option name>, <value>]
     plugins = {}
     for key in form:
         feature_name, option_name = key.replace(']', '').split('[')
