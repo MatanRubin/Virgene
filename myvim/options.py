@@ -60,6 +60,10 @@ class BooleanOption(Option):
                (self.name, self.default_value, self.value, self.description)
 
     def set_value(self, value):
+        if value in ['True', 'true', 'on', 'On']:
+            value = True
+        if value in ['False', 'false', 'off', 'Off']:
+            value = False
         if type(value) is not bool:
             raise ValueError("BooleanOption set with non bool argument")
         self.value = value

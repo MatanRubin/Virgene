@@ -8,8 +8,8 @@ class BuiltinFeature(FeatureBase):
 
     def __init__(self, name, identifier, feature_type, description,
                  default_value, enabled, category, installed, template):
-        super().__init__(name, identifier, feature_type, description, default_value,
-                         enabled, category, installed)
+        super().__init__(name, identifier, feature_type, description,
+                         default_value, enabled, category, installed, [])
         self.template = template
         # TODO possibly add link to Vim documentation
 

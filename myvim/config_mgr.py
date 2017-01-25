@@ -15,6 +15,7 @@ class ConfigMgr:
     def __init__(self):
         self.jinja_env = jinja2.Environment(
             loader=jinja2.FileSystemLoader(path.join(SRC_DIR, 'templates')),
+            keep_trailing_newline=True,
             trim_blocks=True,
             lstrip_blocks=True,
             line_statement_prefix='%',

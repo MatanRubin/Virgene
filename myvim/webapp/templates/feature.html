@@ -3,12 +3,11 @@
     <div id="{{ feature.identifier }}" class="collapse">
         <p><b>{{ feature.description }}</b></p>
         <fieldset>
-        <input type="checkbox" name="{{ feature.identifier }}[enabled]" value="{{ feature.enabled }}">Enabled
         {% if feature.options|length > 0 %}
         <h4>{{ feature.name }} Options</h4>
         {% for option in feature.options %}
         {% if option.option_type is equalto "Boolean" %}
-        <p><input type="checkbox" name="{{ feature.identifier }}[{{ option.identifier }}]" value="{{ option.default_value }}"> {{ option.name }}</p>
+        <p><input type="checkbox" name="{{ feature.identifier }}[{{ option.identifier }}]"> {{ option.name }}</p>
         {% elif option.option_type is equalto "Choice" %}
         <p>
             {{ option.pretty_name }} - {{ option.description }}

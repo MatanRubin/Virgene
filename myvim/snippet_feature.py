@@ -9,7 +9,7 @@ class SnippetFeature(FeatureBase):
     def __init__(self, name, identifier, feature_type, description,
                  default_value, enabled, category, installed, template):
         super().__init__(name, identifier, feature_type, description,
-                         default_value, enabled, category, installed)
+                         default_value, enabled, category, installed, [])
         self.template = template
 
     def __eq__(self, other):

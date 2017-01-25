@@ -1,12 +1,15 @@
 from os import path
 import json
+from typing import List
+
 from myvim.common_defs import FEATURES_DIR
+from myvim.options import BooleanOption
 
 
 class FeatureBase:
 
     def __init__(self, name, identifier, feature_type, description,
-                 default_value, enabled, category, installed):
+                 default_value, enabled, category, installed, options: List):
         self.name = name
         self.identifier = identifier
         self.feature_type = feature_type
@@ -15,6 +18,10 @@ class FeatureBase:
         self.enabled = enabled
         self.category = category
         self.installed = installed
+        self.options =  options
+        if "enabled" not in [x.identifier for x in options]:
+            self.options.insert(0, BooleanOption(name + " Enabled", "enabled",
+                                                 False, None, "Enable " + name))
 
     def __eq__(self, other):
         if isinstance(other, self.__class__):
@@ -45,7 +52,8 @@ class FeatureBase:
                            feature_json["default_value"],
                            feature_json["enabled"],
                            feature_json["category"],
-                           feature_json["installed"])
+                           feature_json["installed"],
+                           [])
 
     @staticmethod
     def from_feature_path(feature_path):
