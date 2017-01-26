@@ -14,7 +14,6 @@ class PluginFeature(FeatureBase):
                          enabled, category, installed, options)
         self.template = template
         self.vundle_installation = vundle_installation
-        self._options_by_id = {x.identifier: x for x in self.options}
 
     def __repr__(self, *args, **kwargs):
         return "PluginFeature(name=%r, feature_type=%r, description=%r, " \
@@ -53,11 +52,8 @@ class PluginFeature(FeatureBase):
 
         return PluginFeature.from_feature_json(feature_json)
 
-    def fill_in_defaults(self):
-        for option in self.options:
-            option.realize()
-
     def apply_config(self, feature_config: dict):
+        # FIXME: this is supposed to be broken. who uses this? maybe webapp...
         for option_id in feature_config:  # type: dict
-            option = self._options_by_id[option_id]
+            option = self.options[option_id]
             option.set_value(feature_config[option_id])

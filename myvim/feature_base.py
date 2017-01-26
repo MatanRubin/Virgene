@@ -2,7 +2,10 @@ from os import path
 import json
 from typing import List
 
+import jinja2
+
 from myvim.common_defs import FEATURES_DIR
+from myvim.common_defs import TEMPLATES_DIR
 from myvim.options import BooleanOption
 
 
@@ -18,10 +21,11 @@ class FeatureBase:
         self.enabled = enabled
         self.category = category
         self.installed = installed
-        self.options =  options
+        self.options = options
         if "enabled" not in [x.identifier for x in options]:
-            self.options.insert(0, BooleanOption(name + " Enabled", "enabled",
-                                                 False, None, "Enable " + name))
+            self.options.insert(0, BooleanOption(name + " Enabled",
+                                                 "enabled", enabled, None,
+                                                 "Enable " + name))
 
     def __eq__(self, other):
         if isinstance(other, self.__class__):
@@ -64,3 +68,24 @@ class FeatureBase:
 
     def apply_config(self, feature_config: dict):
         pass
+
+    def fill_in_defaults(self):
+        for option in self.options:
+            option.realize()
+
+    def get_options_dict(self):
+        return {x.identifier: x for x in self.options}
+
+    def get_template(self):
+        if path.exists(path.join(TEMPLATES_DIR, self.template)):
+            return self.template
+        else:
+            return "one_line_feature.j2"
+
+    def render(self, jinja_env: jinja2.Environment):
+        self.fill_in_defaults()
+        template = jinja_env.get_template(self.get_template())
+        return template.render(feature=self, options=self.get_options_dict())
+
+    def is_enabled(self):
+        return self.get_options_dict()["enabled"].value

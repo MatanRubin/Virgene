@@ -46,26 +46,22 @@ class ConfigMgr:
         corresponding vimrc file content
         :param config: Config
         """
-        # TODO can probably write this in a single block
         snippets = []
         plugins = []
         plugin_configs = []
         builtins = []
 
         for feature in config.features:
-            if not feature.enabled:
+            if not feature.is_enabled():
                 continue
-            template = self.get_template(feature.template)
+            rendered_feature = feature.render(self.jinja_env)
             if feature.feature_type == "Snippet":
-                snippets.append(template.render(snippet=feature))
+                snippets.append(rendered_feature)
             if feature.feature_type == "Plugin":
-                feature.fill_in_defaults()
                 plugins.append(feature)
-                options = {x.identifier: x.value for x in feature.options}
-                plugin_configs.append(
-                    template.render(plugin=feature, options=options))
+                plugin_configs.append(rendered_feature)
             if feature.feature_type == "Builtin":
-                builtins.append(template.render(builtin=feature))
+                builtins.append(rendered_feature)
 
         vimrc_template = self.jinja_env.get_template("vimrc_template.j2")
         return vimrc_template.render(snippets=snippets, plugins=plugins,

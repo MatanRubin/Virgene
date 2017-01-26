@@ -1,17 +1,17 @@
-% extends "plugin_config.j2"
+% extends "configured_feature.j2"
 
-% block plugin_options
+% block configured_feature
 
 % if options.tagbar_width is defined
-let g:tagbar_width = {{ options.tagbar_width }}
+let g:tagbar_width = {{ options.tagbar_width.value }}
 % endif
 
 % if options.tagbar_left is defined
-let g:tagbar_left = {{ options.tagbar_left }}
+let g:tagbar_left = {{ options.tagbar_left.value }}
 % endif
 
 % if options.tagbar_ctags_bin is defined
-let g:tagbar_ctags_bin = '{{ options.tagbar_ctags_bin }}'
+let g:tagbar_ctags_bin = '{{ options.tagbar_ctags_bin.value }}'
 % endif
 
 % endblock
