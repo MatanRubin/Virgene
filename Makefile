@@ -6,7 +6,8 @@ test:
 	pytest
 
 coverage:
-	pytest --cov=${PROJECT_NAME}
+	pytest --cov=${PROJECT_NAME} --cov-report html
+	open htmlcov/index.html
 
 checkstyle:
 	pep8 .
