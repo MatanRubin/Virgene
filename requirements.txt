@@ -19,5 +19,5 @@ pytest-cov==2.4.0
 six==1.10.0
 tabulate==0.7.5
 typed-ast==0.6.3
--e git+https://github.com/MatanRubin/Virgene.git@52720d9a463ba4aed9300239ce676e34ed2853a2#egg=virgene
+-e git+https://github.com/MatanRubin/Virgene.git@f362060f8824a4f481760cf5f053b1a44876f327#egg=virgene
 Werkzeug==0.11.15
