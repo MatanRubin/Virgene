@@ -3,7 +3,6 @@
 	"identifier": "highlight_search",
 	"feature_type": "Builtin",
 	"description": "Highlights search results",
-	"default_value": true,
 	"enabled": false,
 	"category": "General",
 	"installed": true,

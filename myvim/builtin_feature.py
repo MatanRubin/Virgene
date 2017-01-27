@@ -7,9 +7,9 @@ from myvim.feature_base import FeatureBase
 class BuiltinFeature(FeatureBase):
 
     def __init__(self, name, identifier, feature_type, description,
-                 default_value, enabled, category, installed, template):
+                 enabled, category, installed, template):
         super().__init__(name, identifier, feature_type, description,
-                         default_value, enabled, category, installed, [])
+                         enabled, category, installed, [])
         self.template = template
         # TODO possibly add link to Vim documentation
 
@@ -28,10 +28,10 @@ class BuiltinFeature(FeatureBase):
 
     def __repr__(self, *args, **kwargs):
         return "BuiltinFeature(name=%r, feature_type=%r, description=%r, " \
-               "default_value=%r, enabled=%r, category=%r, installed=%r, " \
+               "enabled=%r, category=%r, installed=%r, " \
                "template=%r)" % (self.name, self.feature_type, self.description,
-                                 self.default_value, self.enabled,
-                                 self.category, self.installed, self.template)
+                                 self.enabled, self.category, self.installed,
+                                 self.template)
 
     @staticmethod
     def from_feature_json(feature_json):
@@ -39,7 +39,6 @@ class BuiltinFeature(FeatureBase):
                               feature_json["identifier"],
                               feature_json["feature_type"],
                               feature_json["description"],
-                              feature_json["default_value"],
                               feature_json["enabled"],
                               feature_json["category"],
                               feature_json["installed"],

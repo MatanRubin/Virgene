@@ -3,7 +3,6 @@
 	"identifier": "line_numbers",
 	"feature_type": "Builtin",
 	"description": "Displays lines numbers on the left side of the buffer",
-	"default_value": true,
 	"enabled": false,
 	"category": "General",
 	"installed": true,

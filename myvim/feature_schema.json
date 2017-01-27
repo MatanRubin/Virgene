@@ -24,10 +24,6 @@
       "description": "Detailed description of the feature",
       "type": "string"
     },
-    "default_value": {
-      "description": "Default value of the feature (might remove)",
-      "type": "boolean"
-    },
     "enabled": {
       "description": "Is the feature enabled or disabled by default",
       "type": "boolean"

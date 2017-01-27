@@ -8,20 +8,19 @@ from myvim.options import OptionDecoder
 class PluginFeature(FeatureBase):
 
     def __init__(self, name, identifier, feature_type, description,
-                 default_value, enabled, category, installed, template,
+                 enabled, category, installed, template,
                  vundle_installation, options):
-        super().__init__(name, identifier, feature_type, description, default_value,
+        super().__init__(name, identifier, feature_type, description,
                          enabled, category, installed, options)
         self.template = template
         self.vundle_installation = vundle_installation
 
     def __repr__(self, *args, **kwargs):
         return "PluginFeature(name=%r, feature_type=%r, description=%r, " \
-               "default_value=%r, enabled=%r, category=%r, installed=%r, " \
+               "enabled=%r, category=%r, installed=%r, " \
                "template=%r, vundle_installation=%r, options=%r)" % \
                (self.name, self.feature_type, self.description,
-                self.default_value, self.enabled,
-                self.category, self.installed, self.template,
+                self.enabled, self.category, self.installed, self.template,
                 self.vundle_installation, self.options)
 
     @staticmethod
@@ -37,7 +36,6 @@ class PluginFeature(FeatureBase):
                              feature_json["identifier"],
                              feature_json["feature_type"],
                              feature_json["description"],
-                             feature_json["default_value"],
                              feature_json["enabled"],
                              feature_json["category"],
                              feature_json["installed"],

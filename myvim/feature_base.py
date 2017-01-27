@@ -6,18 +6,16 @@ import jinja2
 
 from myvim.common_defs import FEATURES_DIR
 from myvim.common_defs import TEMPLATES_DIR
-from myvim.options import BooleanOption
 
 
 class FeatureBase:
 
     def __init__(self, name, identifier, feature_type, description,
-                 default_value, enabled, category, installed, options: List):
+                 enabled, category, installed, options: List):
         self.name = name
         self.identifier = identifier
         self.feature_type = feature_type
         self.description = description
-        self.default_value = default_value
         self.enabled = enabled
         self.category = category
         self.installed = installed
@@ -39,10 +37,9 @@ class FeatureBase:
 
     def __repr__(self, *args, **kwargs):
         return "FeatureBase(name=%r, feature_type=%r, description=%r, " \
-               "default_value=%r, enabled=%r, category=%r, installed=%r)" % \
+               "enabled=%r, category=%r, installed=%r)" % \
                (self.name, self.feature_type, self.description,
-                self.default_value, self.enabled,
-                self.category, self.installed)
+                self.enabled, self.category, self.installed)
 
     @staticmethod
     def from_feature_json(feature_json):
@@ -50,7 +47,6 @@ class FeatureBase:
                            feature_json["identifier"],
                            feature_json["feature_type"],
                            feature_json["description"],
-                           feature_json["default_value"],
                            feature_json["enabled"],
                            feature_json["category"],
                            feature_json["installed"],
