@@ -4,7 +4,7 @@
     "feature_type": "Plugin",
     "description": "Full path fuzzy file, buffer, mru, tag, ... finder for Vim.",
     "default_value": false,
-    "enabled": true,
+    "enabled": false,
     "category": "Navigation",
     "installed": true,
     "template": "ctrlp.j2",

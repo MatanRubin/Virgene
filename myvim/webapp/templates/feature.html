@@ -2,6 +2,7 @@
     <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#{{ feature.identifier }}">{{ feature.name }}</button>
     <div id="{{ feature.identifier }}" class="collapse">
         <p><b>{{ feature.description }}</b></p>
+        <input type="checkbox" name="{{ feature.identifier }}[enabled]" value="true">Enabled
         <fieldset>
         {% if feature.options|length > 0 %}
         <h4>{{ feature.name }} Options</h4>

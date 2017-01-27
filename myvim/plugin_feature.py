@@ -51,9 +51,3 @@ class PluginFeature(FeatureBase):
             feature_json = json.load(feature_file)
 
         return PluginFeature.from_feature_json(feature_json)
-
-    def apply_config(self, feature_config: dict):
-        # FIXME: this is supposed to be broken. who uses this? maybe webapp...
-        for option_id in feature_config:  # type: dict
-            option = self.options[option_id]
-            option.set_value(feature_config[option_id])

@@ -1,23 +1,18 @@
-% extends "plugin_config.j2"
+% extends "titled_feature.j2"
 
-% block plugin_options
-
-% if plugin.options.default_snippets is defined
-" Snippets are separated from the engine. Add this if you want them:
-Plugin 'honza/vim-snippets'
-% endif
+% block feature_content
 
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-% if plugin.options.expand_trigger is defined
-let g:UltiSnipsExpandTrigger="{{ plugin.options.expand_trigger.value }}"
+% if options.expand_trigger is defined
+let g:UltiSnipsExpandTrigger="{{ options.expand_trigger.value }}"
 % endif
 
-% if plugin.options.jump_forward_trigger is defined
-let g:UltiSnipsJumpForwardTrigger="{{ plugin.options.jump_forward_trigger.value }}"
+% if options.jump_forward_trigger is defined
+let g:UltiSnipsJumpForwardTrigger="{{ options.jump_forward_trigger.value }}"
 % endif
 
-% if plugin.options.jump_backward_trigger is defined
-let g:UltiSnipsJumpBackwardTrigger="{{ plugin.options.jump_backward_trigger.value }}"
+% if options.jump_backward_trigger is defined
+let g:UltiSnipsJumpBackwardTrigger="{{ options.jump_backward_trigger.value }}"
 % endif
 
 % endblock

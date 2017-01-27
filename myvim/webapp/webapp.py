@@ -41,16 +41,16 @@ def configure():
 
 
 def form_to_json(form):
-    plugins = {}
+    feature_configs = {}
     for key in form:
         feature_name, option_identifier = key.replace(']', '').split('[')
         value = form.getlist(key)
         if len(value) == 1:
             value = value[0]
-        if feature_name not in plugins.keys():
-            plugins[feature_name] = {}
-        plugins[feature_name][option_identifier] = value
-    return plugins
+        if feature_name not in feature_configs.keys():
+            feature_configs[feature_name] = {}
+        feature_configs[feature_name][option_identifier] = value
+    return feature_configs
 
 
 @app.route("/vimrc", methods=['POST'])

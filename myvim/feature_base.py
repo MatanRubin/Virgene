@@ -22,10 +22,7 @@ class FeatureBase:
         self.category = category
         self.installed = installed
         self.options = options
-        if "enabled" not in [x.identifier for x in options]:
-            self.options.insert(0, BooleanOption(name + " Enabled",
-                                                 "enabled", enabled, None,
-                                                 "Enable " + name))
+        self._options_dict = {x.identifier: x for x in self.options}
 
     def __eq__(self, other):
         if isinstance(other, self.__class__):
@@ -67,14 +64,21 @@ class FeatureBase:
         return FeatureBase.from_feature_json(feature_json)
 
     def apply_config(self, feature_config: dict):
-        pass
+        for option_id in feature_config:  # type: str
+            if option_id == "enabled":
+                enabled = True if feature_config[option_id] == "true" else False
+                self.enabled = enabled
+            else:
+                option = self.get_option(option_id)
+                option.set_value(feature_config[option_id])
+
 
     def fill_in_defaults(self):
         for option in self.options:
             option.realize()
 
     def get_options_dict(self):
-        return {x.identifier: x for x in self.options}
+        return self._options_dict
 
     def get_template(self):
         if path.exists(path.join(TEMPLATES_DIR, self.template)):
@@ -88,4 +92,8 @@ class FeatureBase:
         return template.render(feature=self, options=self.get_options_dict())
 
     def is_enabled(self):
-        return self.get_options_dict()["enabled"].value
+        return self.enabled
+
+    def get_option(self, identifier: str):
+        return self._options_dict[identifier]
+

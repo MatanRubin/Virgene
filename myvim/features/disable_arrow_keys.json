@@ -4,7 +4,7 @@
 	"feature_type": "Snippet",
 	"description": "Forces you to use hjkl and motions to move around",
 	"default_value": false,
-	"enabled": true,
+	"enabled": false,
 	"category": "Keymap",
 	"installed": true,
 	"template": "disable_arrow_keys.j2"
