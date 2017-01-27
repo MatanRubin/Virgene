@@ -9,8 +9,7 @@ class BuiltinFeature(FeatureBase):
     def __init__(self, name, identifier, feature_type, description,
                  enabled, category, installed, template):
         super().__init__(name, identifier, feature_type, description,
-                         enabled, category, installed, [])
-        self.template = template
+                         enabled, category, installed, template, [])
         # TODO possibly add link to Vim documentation
 
     def __eq__(self, other):

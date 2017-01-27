@@ -11,7 +11,7 @@ from myvim.common_defs import TEMPLATES_DIR
 class FeatureBase:
 
     def __init__(self, name, identifier, feature_type, description,
-                 enabled, category, installed, options: List):
+                 enabled, category, installed, template: str, options: List):
         self.name = name
         self.identifier = identifier
         self.feature_type = feature_type
@@ -19,6 +19,7 @@ class FeatureBase:
         self.enabled = enabled
         self.category = category
         self.installed = installed
+        self.template = template
         self.options = options
         self._options_dict = {x.identifier: x for x in self.options}
 
@@ -50,6 +51,7 @@ class FeatureBase:
                            feature_json["enabled"],
                            feature_json["category"],
                            feature_json["installed"],
+                           feature_json["template"],
                            [])
 
     @staticmethod

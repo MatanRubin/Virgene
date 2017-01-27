@@ -11,8 +11,7 @@ class PluginFeature(FeatureBase):
                  enabled, category, installed, template,
                  vundle_installation, options):
         super().__init__(name, identifier, feature_type, description,
-                         enabled, category, installed, options)
-        self.template = template
+                         enabled, category, installed, template, options)
         self.vundle_installation = vundle_installation
 
     def __repr__(self, *args, **kwargs):
