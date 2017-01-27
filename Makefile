@@ -1,4 +1,4 @@
-PROJECT_NAME=myvim
+PROJECT_NAME=virgene
 
 all: checkstyle mypy test
 

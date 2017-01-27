@@ -1,7 +1,7 @@
 import json
-from myvim.plugin_feature import PluginFeature
-from myvim.snippet_feature import SnippetFeature
-from myvim.builtin_feature import BuiltinFeature
+from virgene.plugin_feature import PluginFeature
+from virgene.snippet_feature import SnippetFeature
+from virgene.builtin_feature import BuiltinFeature
 
 
 class FeatureDecoder:

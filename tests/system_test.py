@@ -3,11 +3,11 @@ import json
 import jsonschema
 from os import path
 
-from myvim.common_defs import SRC_DIR
-from myvim.feature_base import FeatureBase
-from myvim.plugin_feature import PluginFeature
-from myvim.default_encoder import DefaultEncoder
-from myvim.config_mgr import ConfigMgr
+from virgene.common_defs import SRC_DIR
+from virgene.feature_base import FeatureBase
+from virgene.plugin_feature import PluginFeature
+from virgene.default_encoder import DefaultEncoder
+from virgene.config_mgr import ConfigMgr
 
 
 def _load_json_path(json_path: str):

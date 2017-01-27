@@ -1,11 +1,11 @@
 import jinja2
 from os import path
 
-from myvim.common_defs import TEMPLATES_DIR
-from myvim.common_defs import FEATURES_DIR
-from myvim.builtin_feature import BuiltinFeature
-from myvim.plugin_feature import PluginFeature
-from myvim.snippet_feature import SnippetFeature
+from virgene.common_defs import TEMPLATES_DIR
+from virgene.common_defs import FEATURES_DIR
+from virgene.builtin_feature import BuiltinFeature
+from virgene.plugin_feature import PluginFeature
+from virgene.snippet_feature import SnippetFeature
 
 jinja_env = jinja2.Environment(
     loader=jinja2.FileSystemLoader(TEMPLATES_DIR),

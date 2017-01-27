@@ -1,8 +1,8 @@
 from os import path
 import json
-from myvim.common_defs import FEATURES_DIR
-from myvim.feature_base import FeatureBase
-from myvim.options import OptionDecoder
+from virgene.common_defs import FEATURES_DIR
+from virgene.feature_base import FeatureBase
+from virgene.options import OptionDecoder
 
 
 class PluginFeature(FeatureBase):

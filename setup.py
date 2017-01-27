@@ -9,7 +9,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
-    name='myvim',
+    name='virgene',
 
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
@@ -19,7 +19,7 @@ setup(
     description='Extensible .vimrc generator',
     long_description=long_description,
 
-    url='https://github.com/MatanRubin/my.vim',
+    url='https://github.com/MatanRubin/Virgene',
 
     # Author details
     author='Matan Rubin',

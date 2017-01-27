@@ -2,11 +2,11 @@ import json
 
 import pytest
 
-from myvim.default_encoder import DefaultEncoder
-from myvim.options import BooleanOption
-from myvim.options import ChoiceOption
-from myvim.options import MultipleSelectionOption
-from myvim.options import OptionDecoder
+from virgene.default_encoder import DefaultEncoder
+from virgene.options import BooleanOption
+from virgene.options import ChoiceOption
+from virgene.options import MultipleSelectionOption
+from virgene.options import OptionDecoder
 
 
 def test_boolean_option_set():

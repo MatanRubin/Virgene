@@ -4,10 +4,10 @@ from os import path
 from typing import List
 import jinja2
 
-from myvim.common_defs import SRC_DIR, TEMPLATES_DIR, FEATURES_DIR
-from myvim.config import Config
-from myvim.default_encoder import DefaultEncoder
-from myvim.feature_decoder import FeatureDecoder
+from virgene.common_defs import SRC_DIR, TEMPLATES_DIR, FEATURES_DIR
+from virgene.config import Config
+from virgene.default_encoder import DefaultEncoder
+from virgene.feature_decoder import FeatureDecoder
 
 
 class ConfigMgr:

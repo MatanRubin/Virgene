@@ -4,8 +4,8 @@ from typing import List
 
 import jinja2
 
-from myvim.common_defs import FEATURES_DIR
-from myvim.common_defs import TEMPLATES_DIR
+from virgene.common_defs import FEATURES_DIR
+from virgene.common_defs import TEMPLATES_DIR
 
 
 class FeatureBase:

@@ -4,8 +4,8 @@ from os import path
 from os import listdir
 import pytest
 
-from myvim.common_defs import FEATURES_DIR
-from myvim.common_defs import SRC_DIR
+from virgene.common_defs import FEATURES_DIR
+from virgene.common_defs import SRC_DIR
 
 
 def _load_json_path(json_path: str):

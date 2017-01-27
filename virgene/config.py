@@ -1,7 +1,7 @@
 from typing import Dict
 from typing import List
 
-from myvim.feature_decoder import FeatureDecoder
+from virgene.feature_decoder import FeatureDecoder
 
 
 class Config:
