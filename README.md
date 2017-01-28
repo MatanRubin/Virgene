@@ -1,6 +1,7 @@
 # Virgene - Extensible .vimrc Generator
 
-[![Build Status](https://travis-ci.org/MatanRubin/my.vim.svg?branch=master)](https://travis-ci.org/MatanRubin/my.vim)
+[![Build Status](https://travis-ci.org/MatanRubin/Virgene.svg?branch=master)](https://travis-ci.org/MatanRubin/Virgene)
+[![Coverage Status](https://coveralls.io/repos/github/MatanRubin/Virgene/badge.svg?branch=master)](https://coveralls.io/github/MatanRubin/Virgene?branch=master)
 
 Time saved by using vim is often wasted configuring it.
 
