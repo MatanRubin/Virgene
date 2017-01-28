@@ -21,5 +21,5 @@ requests==2.13.0
 six==1.10.0
 tabulate==0.7.5
 typed-ast==0.6.3
--e git+https://github.com/MatanRubin/Virgene.git@1d196d7ccb23aac427b783adbc7b28f18915f5d8#egg=virgene
+-e git+https://github.com/MatanRubin/Virgene.git@dee29c39dfbcf75ac6bb3674fbb6261d4448d961#egg=virgene
 Werkzeug==0.11.15
