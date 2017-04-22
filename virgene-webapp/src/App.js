@@ -39,11 +39,13 @@ class App extends Component {
         <p className="App-intro">
           Enable and configure Vim features.
         </p>
-        <div>
-          {this.renderFeature(0)}
+        <div className="features-config">
+          {/* this.renderFeature(0)}
           {this.renderFeature(1)}
           {this.renderFeature(2)}
-          {this.renderFeature(3)}
+          {this.renderFeature(3) */}
+          <FeaturesNavigator/>
+          <FeatureDetails/>
         </div>
       </div>
     );
@@ -59,6 +61,12 @@ class App extends Component {
 }
 
 function Feature(props) {
+  return (
+    <h1>asdasd</h1>
+  );
+}
+
+function FeatureListItem(props) {
   var selectedStyle = {
     background: '#0099ff'
   };
@@ -66,9 +74,10 @@ function Feature(props) {
     background: '#ffffff'
   };
   var dstyle = props.selected ? selectedStyle : regularStyle;
+
   return (
     <div>
-      <button className="square" onClick={() => props.onClick()} style={dstyle}>
+      <button className="feature-list-item" onClick={() => props.onClick()} style={dstyle}>
         <h1>{props.name}</h1>
         <p>
           {props.description}
@@ -79,6 +88,68 @@ function Feature(props) {
       </button>
     </div>
   );
+}
+
+class FeatureSearchBox extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {value: ''};
+
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({value: event.target.value});
+  }
+
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <input className="search-box" type="text" value={this.state.value} onChange={this.handleChange} />
+      </form>
+    );
+  }
+}
+
+class FeaturesList extends React.Component {
+  render() {
+    return (
+      <div>
+        <FeatureListItem name="feature1" description="feature1 description" selected={true}/>
+        <FeatureListItem name="feature2" description="feature2 description" selected={false}/>
+        <FeatureListItem name="feature3" description="feature3 description" selected={false}/>
+        <FeatureListItem name="feature4" description="feature4 description" selected={false}/>
+        <FeatureListItem name="feature5" description="feature5 description" selected={false}/>
+        <FeatureListItem name="feature6" description="feature6 description" selected={false}/>
+        <FeatureListItem name="feature7" description="feature7 description" selected={false}/>
+        <FeatureListItem name="feature8" description="feature8 description" selected={false}/>
+        <FeatureListItem name="feature9" description="feature9 description" selected={false}/>
+      </div>
+    );
+  }
+}
+
+class FeatureDetails extends React.Component {
+  render() {
+    return (
+      <div className="feature-details">
+        <h1>Feature Name</h1>
+        <p>Feature description...</p>
+      </div>
+    );
+  }
+}
+
+class FeaturesNavigator extends React.Component {
+  render() {
+    return (
+      <div className="feature-navigator">
+        <FeatureSearchBox/>
+        <FeaturesList/>
+      </div>
+    );
+  }
 }
 
 export default App;
