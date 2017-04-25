@@ -29,6 +29,7 @@ class App extends Component {
       selected: false,
     }
   }
+
   render() {
     return (
       <div className="App">
@@ -40,54 +41,51 @@ class App extends Component {
           Enable and configure Vim features.
         </p>
         <div className="features-config">
-          {/* this.renderFeature(0)}
-          {this.renderFeature(1)}
-          {this.renderFeature(2)}
-          {this.renderFeature(3) */}
-          <FeaturesNavigator/>
-          <FeatureDetails/>
+          <FeaturesNavigator features={this.state.features} onClickNav={(i) => this.handleClick(i)}/>
+          <FeatureDetails features={this.state.features} />
         </div>
       </div>
     );
   }
+
   handleClick(i) {
     const features = this.state.features.slice();
-    features[i].selected = !features[i].selected;
+    features.forEach((feature) => feature.selected = false);
+    features[i].selected = true;
     this.setState({features: features});
   }
-  renderFeature(i) {
-    return <Feature name={this.state.features[i].name} description={this.state.features[i].description} selected={this.state.features[i].selected}  onClick={ () => this.handleClick(i)}/>;
+}
+
+function FeatureDetails(props) {
+  var selectedFeatures = props.features.filter(function(feature) {
+    return feature.selected;
+  });
+  if (selectedFeatures.length > 0) {
+    return (
+      <div className="feature-details">
+        <h1>{selectedFeatures[0].name}</h1>
+        <p>{selectedFeatures[0].description}</p>
+      </div>
+    );
+  } else {
+    return (
+      <div className="feature-details">
+        <h1>Select a feature to show its details...</h1>
+      </div>
+    );
+
   }
 }
 
-function Feature(props) {
-  return (
-    <h1>asdasd</h1>
-  );
-}
-
-function FeatureListItem(props) {
-  var selectedStyle = {
-    background: '#0099ff'
-  };
-  var regularStyle = {
-    background: '#ffffff'
-  };
-  var dstyle = props.selected ? selectedStyle : regularStyle;
-
-  return (
-    <div>
-      <button className="feature-list-item" onClick={() => props.onClick()} style={dstyle}>
-        <h1>{props.name}</h1>
-        <p>
-          {props.description}
-        </p>
-        <p>
-          selected: {props.selected.toString()}
-        </p>
-      </button>
-    </div>
-  );
+class FeaturesNavigator extends React.Component {
+  render() {
+    return (
+      <div className="feature-navigator">
+        <FeatureSearchBox/>
+        <FeaturesList features={this.props.features} onClickFeatureList={(i) => this.props.onClickNav(i)} />
+      </div>
+    );
+  }
 }
 
 class FeatureSearchBox extends React.Component {
@@ -113,43 +111,43 @@ class FeatureSearchBox extends React.Component {
 }
 
 class FeaturesList extends React.Component {
+
   render() {
+    var features = this.props.features;
     return (
-      <div>
-        <FeatureListItem name="feature1" description="feature1 description" selected={true}/>
-        <FeatureListItem name="feature2" description="feature2 description" selected={false}/>
-        <FeatureListItem name="feature3" description="feature3 description" selected={false}/>
-        <FeatureListItem name="feature4" description="feature4 description" selected={false}/>
-        <FeatureListItem name="feature5" description="feature5 description" selected={false}/>
-        <FeatureListItem name="feature6" description="feature6 description" selected={false}/>
-        <FeatureListItem name="feature7" description="feature7 description" selected={false}/>
-        <FeatureListItem name="feature8" description="feature8 description" selected={false}/>
-        <FeatureListItem name="feature9" description="feature9 description" selected={false}/>
+      <div className="features-list">
+        {features.map((feature, index) => {
+          return (
+            <FeatureListItem key={index} name={feature.name} description={feature.description} selected={feature.selected} onClickFeatureListItem={() => this.props.onClickFeatureList(index)}/>
+          );
+        })}
       </div>
     );
   }
 }
 
-class FeatureDetails extends React.Component {
-  render() {
-    return (
-      <div className="feature-details">
-        <h1>Feature Name</h1>
-        <p>Feature description...</p>
-      </div>
-    );
-  }
-}
+function FeatureListItem(props) {
+  var selectedStyle = {
+    background: '#0099ff'
+  };
+  var regularStyle = {
+    background: '#ffffff'
+  };
+  var dstyle = props.selected ? selectedStyle : regularStyle;
 
-class FeaturesNavigator extends React.Component {
-  render() {
-    return (
-      <div className="feature-navigator">
-        <FeatureSearchBox/>
-        <FeaturesList/>
-      </div>
-    );
-  }
+  return (
+    <div>
+      <button className="feature-list-item" onClick={() => props.onClickFeatureListItem()} style={dstyle}>
+        <h1>{props.name}</h1>
+        <p>
+          {props.description}
+        </p>
+        <p>
+          selected: {props.selected.toString()}
+        </p>
+      </button>
+    </div>
+  );
 }
 
 export default App;
