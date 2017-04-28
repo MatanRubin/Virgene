@@ -12,21 +12,25 @@ class App extends Component {
       name: "CtrlP",
       description: "Fuzzy file search",
       selected: false,
+      visible: true,
     }
     this.state.features[1] = {
       name: "Tagbar",
       description: "Tag browser",
       selected: false,
+      visible: true,
     }
     this.state.features[2] = {
       name: "Disable arrow keys",
       description: "Disable arrow keys, helps you learn to use just hjkl",
       selected: false,
+      visible: true,
     }
     this.state.features[3] = {
       name: "Highlight search",
       description: "Highlight search results",
       selected: false,
+      visible: true,
     }
   }
 
@@ -41,7 +45,7 @@ class App extends Component {
           Enable and configure Vim features.
         </p>
         <div className="features-config">
-          <FeaturesNavigator features={this.state.features} onClickNav={(i) => this.handleClick(i)}/>
+          <FeaturesNavigator features={this.state.features} onClickNav={(i) => this.handleClick(i)} onSearch={(searchString) => this.handleSearch(searchString)}/>
           <FeatureDetails features={this.state.features} />
         </div>
       </div>
@@ -52,6 +56,12 @@ class App extends Component {
     const features = this.state.features.slice();
     features.forEach((feature) => feature.selected = false);
     features[i].selected = true;
+    this.setState({features: features});
+  }
+
+  handleSearch(searchString) {
+    const features = this.state.features.slice();
+    features.forEach((feature) => feature.visible = feature.name.toLowerCase().includes(searchString.toLowerCase()));
     this.setState({features: features});
   }
 }
@@ -81,7 +91,7 @@ class FeaturesNavigator extends React.Component {
   render() {
     return (
       <div className="feature-navigator">
-        <FeatureSearchBox/>
+        <FeatureSearchBox onSearch={(searchString) => this.props.onSearch(searchString)}/>
         <FeaturesList features={this.props.features} onClickFeatureList={(i) => this.props.onClickNav(i)} />
       </div>
     );
@@ -99,6 +109,7 @@ class FeatureSearchBox extends React.Component {
 
   handleChange(event) {
     this.setState({value: event.target.value});
+    this.props.onSearch(event.target.value);
   }
 
   render() {
@@ -118,7 +129,7 @@ class FeaturesList extends React.Component {
       <div className="features-list">
         {features.map((feature, index) => {
           return (
-            <FeatureListItem key={index} name={feature.name} description={feature.description} selected={feature.selected} onClickFeatureListItem={() => this.props.onClickFeatureList(index)}/>
+            <FeatureListItem key={index} name={feature.name} description={feature.description} selected={feature.selected} onClickFeatureListItem={() => this.props.onClickFeatureList(index)} visible={feature.visible}/>
           );
         })}
       </div>
@@ -134,6 +145,10 @@ function FeatureListItem(props) {
     background: '#ffffff'
   };
   var dstyle = props.selected ? selectedStyle : regularStyle;
+
+  if (!props.visible) {
+    return null;
+  }
 
   return (
     <div>
