@@ -1,13 +1,8 @@
 import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import {HotModuleReplacementPlugin} from 'webpack';
+import { HotModuleReplacementPlugin } from 'webpack';
 
-const defaultEnv = {
-    dev: true,
-    production: false,
-};
-
-export default (env = defaultEnv) => ({
+export default () => ({
   entry: [
     'react-hot-loader/patch', // Needed to preserve state
     'webpack-dev-server/client?http://localhost:8080', // webpack dev server host and port
@@ -19,13 +14,16 @@ export default (env = defaultEnv) => ({
   },
   plugins: [
     new HtmlWebpackPlugin({
-        filename: 'index.html',
-        template: './src/index.html'
+      filename: 'index.html',
+      template: './src/index.html',
     }),
     new HotModuleReplacementPlugin(), // Globally enable hot code replacement
   ],
   devServer: {
     hot: true,
+  },
+  resolve: {
+    extensions: ['.webpack.js', '.web.js', '.js', '.json', '.jsx'],
   },
   module: {
     rules: [
@@ -43,14 +41,14 @@ export default (env = defaultEnv) => ({
                 ['es2015', { modules: false }],
                 'react',
               ],
-            }
-          }
-        ]
+            },
+          },
+        ],
       },
       {
         test: /\.(css|scss|sass)$/,
         loader: 'style-loader!css-loader!sass-loader',
       },
-    ]
+    ],
   },
 });
