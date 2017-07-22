@@ -1,6 +1,8 @@
 import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import { HotModuleReplacementPlugin } from 'webpack';
+import { NamedModulesPlugin, HotModuleReplacementPlugin } from 'webpack';
+
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 export default () => ({
   entry: [
@@ -13,11 +15,13 @@ export default () => ({
     filename: 'bundle.js',
   },
   plugins: [
+    new ExtractTextPlugin('style.css'),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: './src/index.html',
     }),
     new HotModuleReplacementPlugin(), // Globally enable hot code replacement
+    new NamedModulesPlugin(),
   ],
   devServer: {
     hot: true,
@@ -46,8 +50,23 @@ export default () => ({
         ],
       },
       {
-        test: /\.(css|scss|sass)$/,
-        loader: 'style-loader!css-loader!sass-loader',
+        test: /\.scss$/,
+        exclude: /node_modules/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              query: {
+                modules: true,
+                sourceMap: true,
+                importLoaders: 2,
+                localIdentName: '[name]__[local]___[hash:base64:5]',
+              },
+            },
+            'sass-loader',
+          ],
+        }),
       },
     ],
   },
