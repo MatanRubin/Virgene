@@ -42,6 +42,9 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
+button {
+  outline: none;
+}
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -49,46 +52,45 @@ table {
   text-align: left;
 }
 
-.App-logo {
+.appLogo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
 }
 
-.App-header {
+.appHeader {
   background-color: #009933;
   height: 100px;
   padding: 20px;
   color: white;
+  h2 {
+    font-size: 24px;
+  }
+
+  h3 {
+    font-size: 16px;
+  }
 }
 
-.App-intro {
+.appIntro {
   font-size: large;
 }
 
-@keyframes App-logo-spin {
+@keyframes appLogoSpin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
 
 
-.feature-details {
-  background: #afa;
-  /*width: 500px;*/
-  flex: 3;
-}
-
-.feature-navigator {
-  background: #acf;
+.featuresConfig {
   display: flex;
-  justify-content: left;
-  flex-direction: column;
-  flex: 1;
-}
-
-.features-config {
-  background: #f0f;
-  display: flex;
-  padding: 10px;
+  flex-direction: row;
+  padding: 15px;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 3px;
+  border-color: #ccc;
+  padding: 15px;
+  margin: 15px;
 }
 
 

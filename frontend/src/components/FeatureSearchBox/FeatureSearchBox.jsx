@@ -25,6 +25,7 @@ export default class FeatureSearchBox extends React.Component {
           type="text"
           value={this.state.value}
           onChange={this.handleChange}
+          placeholder="Search a feature you want to configure..."
         />
       </form>
     );

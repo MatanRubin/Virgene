@@ -1,6 +1,24 @@
 .FeatureDetails {
-  background: #afa;
-  /*width: 500px;*/
+  margin: 15px;
   flex: 3;
+  h1 {
+    font-size: 24px;
+    margin-bottom: 5px;
+  }
+
+  h2 {
+    font-size: 20px;
+    margin-bottom: 5px;
+  }
+
+  p {
+    margin-bottom: 5px;
+  }
+}
+
+.noSelection {
+  width: 100%;
+  text-align: center;
+  margin: auto;
 }
 
