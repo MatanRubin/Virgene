@@ -13,8 +13,22 @@ const FeatureDetails = props => (
       props.selectedFeature.options ?
         props.selectedFeature.options.map((option) => {
           switch (option.option_type) {
-            case 'Choice': return (<OptionSelect option={option} />);
-            case 'MultipleSelection': return (<OptionMultipleSelection option={option} />);
+            case 'Choice':
+              return (
+                <OptionSelect
+                  name={option.name}
+                  description={option.description}
+                  options={option.options}
+                  multi={false}
+                />);
+            case 'MultipleSelection':
+              return (
+                <OptionSelect
+                  name={option.name}
+                  description={option.description}
+                  options={option.options}
+                  multi={true}
+                />);
             default: return (<p>{option.name}</p>);
           }
         }) :
